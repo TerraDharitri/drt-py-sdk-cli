@@ -259,8 +259,8 @@ def test_wallet_convert_keystore_with_secret_key_to_pem(monkeypatch: Any):
     )
 
     pem = UserPEM.from_file(outfile)
-    assert pem.label == "drt1c7pyyq2yaq5k7atn9z6qn5qkxwlc6zwc4vg7uuxn9ssy7evfh5jq4nm79l"
-    assert pem.secret_key.hex() == "7b4686f3c925f9f6571de5fa24fb6a7ac0a2e5439a48bad8ed90b6690aad6017"
+    assert pem.label == "drt1qyu5wthldzr8wx5c9ucg8kjagg0jfs53s8nr3zpz3hypefsdd8ssey5egf"
+    assert pem.secret_key.hex() == "413f42575f7f26fad3317a778771212fdb80245850981e48b58a4f25e344e8f9"
 
 
 def test_wallet_bech32_encode(capsys: Any):
@@ -269,12 +269,12 @@ def test_wallet_bech32_encode(capsys: Any):
             "wallet",
             "bech32",
             "--encode",
-            "c782420144e8296f757328b409d01633bf8d09d8ab11ee70d32c204f6589bd24",
+            "0139472eff6886771a982f3083da5d421f24c29181e63888228dc81ca60d69e1",
         ]
     )
 
     out = _read_stdout(capsys)
-    assert out == "drt1c7pyyq2yaq5k7atn9z6qn5qkxwlc6zwc4vg7uuxn9ssy7evfh5jq4nm79l"
+    assert out == "drt1qyu5wthldzr8wx5c9ucg8kjagg0jfs53s8nr3zpz3hypefsdd8ssey5egf"
 
 
 def test_wallet_bech32_decode(capsys: Any):
@@ -283,12 +283,12 @@ def test_wallet_bech32_decode(capsys: Any):
             "wallet",
             "bech32",
             "--decode",
-            "drt1c7pyyq2yaq5k7atn9z6qn5qkxwlc6zwc4vg7uuxn9ssy7evfh5jq4nm79l",
+            "drt1qyu5wthldzr8wx5c9ucg8kjagg0jfs53s8nr3zpz3hypefsdd8ssey5egf",
         ]
     )
 
     out = _read_stdout(capsys)
-    assert out == "c782420144e8296f757328b409d01633bf8d09d8ab11ee70d32c204f6589bd24"
+    assert out == "0139472eff6886771a982f3083da5d421f24c29181e63888228dc81ca60d69e1"
 
 
 def test_wallet_convert_pem_to_bech32_address(capsys: Any):
@@ -308,7 +308,7 @@ def test_wallet_convert_pem_to_bech32_address(capsys: Any):
     )
 
     out = _read_stdout(capsys).strip("Output:\n\n")
-    assert out == "drt1c7pyyq2yaq5k7atn9z6qn5qkxwlc6zwc4vg7uuxn9ssy7evfh5jq4nm79l"
+    assert out == "drt1qyu5wthldzr8wx5c9ucg8kjagg0jfs53s8nr3zpz3hypefsdd8ssey5egf"
 
 
 def test_wallet_convert_pem_to_pubkey(capsys: Any):
@@ -328,7 +328,7 @@ def test_wallet_convert_pem_to_pubkey(capsys: Any):
     )
 
     out = _read_stdout(capsys).strip("Output:\n\n")
-    assert out == "c782420144e8296f757328b409d01633bf8d09d8ab11ee70d32c204f6589bd24"
+    assert out == "0139472eff6886771a982f3083da5d421f24c29181e63888228dc81ca60d69e1"
 
 
 def test_wallet_convert_pem_to_secret_key(capsys: Any):
@@ -337,7 +337,7 @@ def test_wallet_convert_pem_to_secret_key(capsys: Any):
     main(["wallet", "convert", "--infile", str(infile), "--in-format", "pem", "--out-format", "secret-key"])
 
     out = _read_stdout(capsys).strip("Output:\n\n")
-    assert out == "7b4686f3c925f9f6571de5fa24fb6a7ac0a2e5439a48bad8ed90b6690aad6017"
+    assert out == "413f42575f7f26fad3317a778771212fdb80245850981e48b58a4f25e344e8f9"
 
 
 def test_wallet_sign_message(capsys: Any):
@@ -349,16 +349,16 @@ def test_wallet_sign_message(capsys: Any):
 
     assert False if return_code else True
     assert out == {
-        "address": "drt1c7pyyq2yaq5k7atn9z6qn5qkxwlc6zwc4vg7uuxn9ssy7evfh5jq4nm79l",
+        "address": "drt1qyu5wthldzr8wx5c9ucg8kjagg0jfs53s8nr3zpz3hypefsdd8ssey5egf",
         "message": "test",
-        "signature": "0x4b9b9293d7aa63b012641485865027adef8b4d4351d27f59ae62979acd49b328876c2fce97a2bed20f2ac12180155494ce1a1dc6103ec78a1ed32c6132734004",
+        "signature": "0x70e7cbd157568ce5250ced7c3e6caf97669c47142cc337b135bbd7a438ae962fa84a426fd1b64fcdcdecc3a2935b7db9b8d35035eaae153126608c2c03602109",
     }
 
 
 def test_verify_previously_signed_message(capsys: Any):
     message = "test"
-    address = "drt1c7pyyq2yaq5k7atn9z6qn5qkxwlc6zwc4vg7uuxn9ssy7evfh5jq4nm79l"
-    signature = "0x4b9b9293d7aa63b012641485865027adef8b4d4351d27f59ae62979acd49b328876c2fce97a2bed20f2ac12180155494ce1a1dc6103ec78a1ed32c6132734004"
+    address = "drt1qyu5wthldzr8wx5c9ucg8kjagg0jfs53s8nr3zpz3hypefsdd8ssey5egf"
+    signature = "0x70e7cbd157568ce5250ced7c3e6caf97669c47142cc337b135bbd7a438ae962fa84a426fd1b64fcdcdecc3a2935b7db9b8d35035eaae153126608c2c03602109"
 
     return_code = main(
         [
@@ -375,14 +375,14 @@ def test_verify_previously_signed_message(capsys: Any):
     assert False if return_code else True
 
     out = _read_stdout(capsys)
-    text = """SUCCESS: The message "test" was signed by drt1c7pyyq2yaq5k7atn9z6qn5qkxwlc6zwc4vg7uuxn9ssy7evfh5jq4nm79l""".split()
+    text = """SUCCESS: The message "test" was signed by drt1qyu5wthldzr8wx5c9ucg8kjagg0jfs53s8nr3zpz3hypefsdd8ssey5egf""".split()
     assert all(word in out for word in text)
 
 
 def test_verify_not_signed_message(capsys: Any):
     message = "this message is not signed"
-    address = "drt1c7pyyq2yaq5k7atn9z6qn5qkxwlc6zwc4vg7uuxn9ssy7evfh5jq4nm79l"
-    signature = "0x4b9b9293d7aa63b012641485865027adef8b4d4351d27f59ae62979acd49b328876c2fce97a2bed20f2ac12180155494ce1a1dc6103ec78a1ed32c6132734004"
+    address = "drt1qyu5wthldzr8wx5c9ucg8kjagg0jfs53s8nr3zpz3hypefsdd8ssey5egf"
+    signature = "0x7aff43cd6e3d880a65033bf0a1b16274854fd7dfa9fe5faa7fa9a665ee851afd4c449310f5f1697d348e42d1819eaef69080e33e7652d7393521ed50d7427a0e"
 
     return_code = main(
         [
@@ -399,7 +399,7 @@ def test_verify_not_signed_message(capsys: Any):
     assert False if return_code else True
 
     out = _read_stdout(capsys)
-    text = """FAILED: The message "this message is not signed" was NOT signed by drt1c7pyyq2yaq5k7atn9z6qn5qkxwlc6zwc4vg7uuxn9ssy7evfh5jq4nm79l""".split()
+    text = """FAILED: The message "this message is not signed" was NOT signed by drt1qyu5wthldzr8wx5c9ucg8kjagg0jfs53s8nr3zpz3hypefsdd8ssey5egf""".split()
     assert all(word in out for word in text)
 
 
@@ -423,9 +423,9 @@ def test_sign_and_verify_message_with_multi_address_pem(capsys: Any):
 
     assert False if return_code else True
     assert out == {
-        "address": "drt1c7pyyq2yaq5k7atn9z6qn5qkxwlc6zwc4vg7uuxn9ssy7evfh5jq4nm79l",
+        "address": "drt1qyu5wthldzr8wx5c9ucg8kjagg0jfs53s8nr3zpz3hypefsdd8ssey5egf",
         "message": "test",
-        "signature": "0x4b9b9293d7aa63b012641485865027adef8b4d4351d27f59ae62979acd49b328876c2fce97a2bed20f2ac12180155494ce1a1dc6103ec78a1ed32c6132734004",
+        "signature": "0x70e7cbd157568ce5250ced7c3e6caf97669c47142cc337b135bbd7a438ae962fa84a426fd1b64fcdcdecc3a2935b7db9b8d35035eaae153126608c2c03602109",
     }
 
     return_code = main(
@@ -433,17 +433,17 @@ def test_sign_and_verify_message_with_multi_address_pem(capsys: Any):
             "wallet",
             "verify-message",
             "--address",
-            "drt1c7pyyq2yaq5k7atn9z6qn5qkxwlc6zwc4vg7uuxn9ssy7evfh5jq4nm79l",
+            "drt1qyu5wthldzr8wx5c9ucg8kjagg0jfs53s8nr3zpz3hypefsdd8ssey5egf",
             "--message",
             message,
             "--signature",
-            "0x4b9b9293d7aa63b012641485865027adef8b4d4351d27f59ae62979acd49b328876c2fce97a2bed20f2ac12180155494ce1a1dc6103ec78a1ed32c6132734004",
+            "0x70e7cbd157568ce5250ced7c3e6caf97669c47142cc337b135bbd7a438ae962fa84a426fd1b64fcdcdecc3a2935b7db9b8d35035eaae153126608c2c03602109",
         ]
     )
     assert False if return_code else True
 
     out = _read_stdout(capsys)
-    text = """SUCCESS: The message "test" was signed by drt1c7pyyq2yaq5k7atn9z6qn5qkxwlc6zwc4vg7uuxn9ssy7evfh5jq4nm79l""".split()
+    text = """SUCCESS: The message "test" was signed by drt1qyu5wthldzr8wx5c9ucg8kjagg0jfs53s8nr3zpz3hypefsdd8ssey5egf""".split()
     assert all(word in out for word in text)
 
     return_code = main(
@@ -462,9 +462,9 @@ def test_sign_and_verify_message_with_multi_address_pem(capsys: Any):
 
     assert False if return_code else True
     assert out == {
-        "address": "drt18h03w0y7qtqwtra3u4f0gu7e3kn2fslj83lqxny39m5c4rwaectswerhd2",
+        "address": "drt1spyavw0956vq68xj8y4tenjpq2wd5a9p2c6j8gsz7ztyrnpxrruqlqde3c",
         "message": "test",
-        "signature": "0x77f27d595fb87b24df689948f6aaf2d80a832107b2979098d3e5ac5a30da45e379c0d1edfe0d257fbe338ac4a488417a88933b1e73278bf1321c15ab297c9e0e",
+        "signature": "0x48ae41f07bd508acd69547295426a42634d6fbae614c8360158794246497534050984921ac20bc3447e68042ee7f7779c6bc872038dcbc3a27e6585adae1a007",
     }
 
     return_code = main(
@@ -472,17 +472,17 @@ def test_sign_and_verify_message_with_multi_address_pem(capsys: Any):
             "wallet",
             "verify-message",
             "--address",
-            "drt18h03w0y7qtqwtra3u4f0gu7e3kn2fslj83lqxny39m5c4rwaectswerhd2",
+            "drt1spyavw0956vq68xj8y4tenjpq2wd5a9p2c6j8gsz7ztyrnpxrruqlqde3c",
             "--message",
             message,
             "--signature",
-            "0x77f27d595fb87b24df689948f6aaf2d80a832107b2979098d3e5ac5a30da45e379c0d1edfe0d257fbe338ac4a488417a88933b1e73278bf1321c15ab297c9e0e",
+            "0x48ae41f07bd508acd69547295426a42634d6fbae614c8360158794246497534050984921ac20bc3447e68042ee7f7779c6bc872038dcbc3a27e6585adae1a007",
         ]
     )
     assert False if return_code else True
 
     out = _read_stdout(capsys)
-    text = """SUCCESS: The message "test" was signed by drt18h03w0y7qtqwtra3u4f0gu7e3kn2fslj83lqxny39m5c4rwaectswerhd2""".split()
+    text = """SUCCESS: The message "test" was signed by drt1spyavw0956vq68xj8y4tenjpq2wd5a9p2c6j8gsz7ztyrnpxrruqlqde3c""".split()
     assert all(word in out for word in text)
 
     return_code = main(
@@ -501,9 +501,9 @@ def test_sign_and_verify_message_with_multi_address_pem(capsys: Any):
 
     assert False if return_code else True
     assert out == {
-        "address": "drt1kp072dwz0arfz8m5lzmlypgu2nme9l9q33aty0znualvanfvmy5qd3yy8q",
+        "address": "drt1k2s324ww2g0yj38qn2ch2jwctdy8mnfxep94q9arncc6xecg3xaq889n6e",
         "message": "test",
-        "signature": "0x0b9bd2bc1251afd81bcab81a6c3aa72e368ca057c21b6dc4d5aafa3eb8dde713e65cd4db7cb1f803abe89e81ee9db1e4d0f449a9bf0ec9b2a8ac0f8e640b8304",
+        "signature": "0x6a33048ee7563e21a56c53f820efc1c308c7234580abe44a8e39b52ec0c7e3f2a67174f71c1af22a808d40c970d9f6d4c3426dc93e909472219efebccceece0a",
     }
 
     return_code = main(
@@ -511,17 +511,17 @@ def test_sign_and_verify_message_with_multi_address_pem(capsys: Any):
             "wallet",
             "verify-message",
             "--address",
-            "drt1kp072dwz0arfz8m5lzmlypgu2nme9l9q33aty0znualvanfvmy5qd3yy8q",
+            "drt1k2s324ww2g0yj38qn2ch2jwctdy8mnfxep94q9arncc6xecg3xaq889n6e",
             "--message",
             message,
             "--signature",
-            "0x0b9bd2bc1251afd81bcab81a6c3aa72e368ca057c21b6dc4d5aafa3eb8dde713e65cd4db7cb1f803abe89e81ee9db1e4d0f449a9bf0ec9b2a8ac0f8e640b8304",
+            "0x6a33048ee7563e21a56c53f820efc1c308c7234580abe44a8e39b52ec0c7e3f2a67174f71c1af22a808d40c970d9f6d4c3426dc93e909472219efebccceece0a",
         ]
     )
     assert False if return_code else True
 
     out = _read_stdout(capsys)
-    text = """SUCCESS: The message "test" was signed by drt1kp072dwz0arfz8m5lzmlypgu2nme9l9q33aty0znualvanfvmy5qd3yy8q""".split()
+    text = """SUCCESS: The message "test" was signed by drt1k2s324ww2g0yj38qn2ch2jwctdy8mnfxep94q9arncc6xecg3xaq889n6e""".split()
     assert all(word in out for word in text)
 
 

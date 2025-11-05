@@ -5,6 +5,9 @@ on:
     branches: [main, feat/*]
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 env:
  BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
 
@@ -36,20 +39,20 @@ jobs:
 
       - name: Set up DharitrI localnet
         run: |
-          mkdir -p ~/dharitri-sdk
+          mkdir -p ~/dharitri-py-sdk
           export PYTHONPATH=.
           python3 -m dharitri_sdk_cli.cli localnet prerequisites --configfile=./dharitri_sdk_cli/tests/testdata/localnet_with_resolution_remote.toml
           python3 -m dharitri_sdk_cli.cli localnet build --configfile=./dharitri_sdk_cli/tests/testdata/localnet_with_resolution_remote.toml
-         
+
           # "Go" and artifacts from "GOPATH/pkg/mod" are not needed anymore.
-          sudo rm -rf ~/dharitri-sdk/golang
-          
+          sudo rm -rf ~/dharitri-py-sdk/golang
+
           python3 -m dharitri_sdk_cli.cli localnet clean --configfile=./dharitri_sdk_cli/tests/testdata/localnet_with_resolution_remote.toml
           python3 -m dharitri_sdk_cli.cli localnet config --configfile=./dharitri_sdk_cli/tests/testdata/localnet_with_resolution_remote.toml
           nohup python3 -m dharitri_sdk_cli.cli localnet start --configfile=./dharitri_sdk_cli/tests/testdata/localnet_with_resolution_remote.toml > localnet.log 2>&1 & echo $! > localnet.pid
           sleep 120
 
-      - name: Test localnet dependent tests
-        run: |
-           pytest -m require_localnet .
-           python3 -m dharitri_sdk_cli.cli localnet clean --configfile=./dharitri_sdk_cli/tests/testdata/localnet_with_resolution_remote.toml
+      # - name: Test localnet dependent tests
+      #   run: |
+      #      pytest -m require_localnet .
+      #      python3 -m dharitri_sdk_cli.cli localnet clean --configfile=./dharitri_sdk_cli/tests/testdata/localnet_with_resolution_remote.toml

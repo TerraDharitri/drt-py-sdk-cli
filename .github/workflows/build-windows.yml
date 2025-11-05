@@ -8,6 +8,9 @@ on:
     branches: [main, feat/*]
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   build:
     name: Build and Test drtpy for ${{ matrix.os }}, python ${{ matrix.python-version }}
@@ -16,7 +19,7 @@ jobs:
 
     strategy:
       matrix:
-        os: [windows-2019]
+        os: [windows-2022]
         python-version: [3.11]
 
     steps:
@@ -34,7 +37,7 @@ jobs:
       - name: Set github_api_token
         shell: bash
         run: |
-          mkdir ~/dharitri-sdk
+          mkdir ~/dharitri-py-sdk
           export PYTHONPATH=.
           python3 -m dharitri_sdk_cli.cli config new test
           python3 -m dharitri_sdk_cli.cli config set github_api_token ${{ secrets.GITHUB_TOKEN }}
