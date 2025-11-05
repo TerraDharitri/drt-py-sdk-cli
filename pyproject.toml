@@ -3,8 +3,8 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "dharitri-py-sdk-cli"
-version = "0.0.3"
+name = "dharitri-sdk-cli"
+version = "0.0.4"
 authors = [
   { name="DharitrI" },
 ]
@@ -25,7 +25,7 @@ dependencies = [
   "ledgercomm[hid]",
   "rich==13.3.4",
   "argcomplete==3.2.2",
-  "dharitri-py-sdk[ledger]==0.0.5"
+  "dharitri-py-sdk[ledger]==0.0.6"
 ]
 
 [project.scripts]

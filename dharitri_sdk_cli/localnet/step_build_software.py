@@ -72,7 +72,7 @@ def _get_chain_vm_go_folder_name(config: ConfigRoot) -> str:
 def _get_chain_vm_go_legacy_folder_name(config: ConfigRoot) -> str:
     go_mod = config.software.drt_go_chain.get_path_within_source(Path("go.mod"))
     lines = utils.read_lines(go_mod)
-    line = [line for line in lines if "github.com/TerraDharitri/drt-go-chain-vm" in line][0]
+    line = [line for line in lines if "github.com/TerraDharitri/drt-go-chain-vm-v1_4" in line][0]
     parts = line.split()
     return f"{parts[0]}@{parts[1]}"
 

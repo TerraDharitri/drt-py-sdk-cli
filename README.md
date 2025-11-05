@@ -1,5 +1,5 @@
 # Description
-Python Command Line Tools for interacting with Dharitri<sup>X</sup>.
+Python Command Line Tools for interacting with Multivers<sup>X</sup>.
 
 ## Documentation
 [docs.dharitri.org](https://docs.dharitri.org/sdk-and-tools/sdk-py/)
@@ -8,7 +8,7 @@ Python Command Line Tools for interacting with Dharitri<sup>X</sup>.
 [CLI](CLI.md)
 
 ## Distribution
-[pipx](https://docs.dharitri.org/sdk-and-tools/sdk-py/installing-drtpy/) [(PyPi)](https://pypi.org/project/dharitri-py-sdk-cli/#history)
+[pipx](https://docs.dharitri.org/sdk-and-tools/sdk-py/installing-drtpy/) [(PyPi)](https://pypi.org/project/dharitri-sdk-cli/#history)
 
 ## Development setup
 

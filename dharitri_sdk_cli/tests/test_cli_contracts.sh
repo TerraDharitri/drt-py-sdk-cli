@@ -100,10 +100,10 @@ testVerifyContract(){
 testReproducibleBuild() {
     echo "testReproducibleBuild"
 
-    wget -O ${SANDBOX}/example.zip https://github.com/TerraDharitri/drt-reproducible-contract-build-example-sc/archive/refs/tags/v0.2.1.zip || return 1
+    wget -O ${SANDBOX}/example.zip https://github.com/TerraDharitri/drt-sc-reproducible-contract-build-example/archive/refs/tags/v0.2.1.zip || return 1
     unzip ${SANDBOX}/example.zip -d ${SANDBOX} || return 1
-    ${CLI} contract reproducible-build ${SANDBOX}/drt-reproducible-contract-build-example-sc-0.2.1 --docker-image=terradharitri/sdk-rust-contract-builder:v4.1.2 --no-docker-interactive --no-docker-tty || return 1
-    assertFileExists ${SANDBOX}/drt-reproducible-contract-build-example-sc-0.2.1/output-docker/artifacts.json || return 1
+    ${CLI} contract reproducible-build ${SANDBOX}/drt-sc-reproducible-contract-build-example-0.2.1 --docker-image=terradharitri/sdk-rust-contract-builder:v4.1.2 --no-docker-interactive --no-docker-tty || return 1
+    assertFileExists ${SANDBOX}/drt-sc-reproducible-contract-build-example-0.2.1/output-docker/artifacts.json || return 1
 }
 
 testAll() {
