@@ -19,7 +19,7 @@ def test_override_config() -> None:
     assert config.software.drt_go_chain.resolution == SoftwareResolution.Remote
     assert (
         config.software.drt_go_chain.archive_url
-        == "https://github.com/TerraDharitri/drt-go-chain/archive/refs/heads/main.zip"
+        == "https://github.com/TerraDharitri/drt-go-chain/archive/refs/heads/master.zip"
     )
 
     # Now partly override the config

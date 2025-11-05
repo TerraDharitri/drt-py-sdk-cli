@@ -5,30 +5,25 @@ from typing import Any
 from dharitri_py_sdk import (
     Address,
     ProxyNetworkProvider,
-    Token,
-    TokenComputer,
-    TokenTransfer,
     TransactionComputer,
+    TransfersController,
 )
 
 from dharitri_sdk_cli import cli_shared, utils
 from dharitri_sdk_cli.args_validation import (
     ensure_relayer_wallet_args_are_provided,
-    ensure_wallet_args_are_provided,
     validate_broadcast_args,
     validate_chain_id_args,
     validate_nonce_args,
     validate_proxy_argument,
     validate_receiver_args,
 )
-from dharitri_sdk_cli.base_transactions_controller import BaseTransactionsController
 from dharitri_sdk_cli.cli_output import CLIOutputBuilder
 from dharitri_sdk_cli.config import get_config_for_network_providers
 from dharitri_sdk_cli.errors import BadUsage, IncorrectWalletError, NoWalletProvided
-from dharitri_sdk_cli.transactions import (
-    TransactionsController,
-    load_transaction_from_file,
-)
+from dharitri_sdk_cli.guardian_relayer_data import GuardianRelayerData
+from dharitri_sdk_cli.signing_wrapper import SigningWrapper
+from dharitri_sdk_cli.transactions import load_transaction_from_file
 
 logger = logging.getLogger("cli.transactions")
 
@@ -51,17 +46,7 @@ def setup_parser(args: list[str], subparsers: Any) -> Any:
     cli_shared.add_guardian_wallet_args(args, sub)
     cli_shared.add_relayed_v3_wallet_args(args, sub)
 
-    sub.add_argument(
-        "--wait-result",
-        action="store_true",
-        default=False,
-        help="signal to wait for the transaction result - only valid if --send is set",
-    )
-    sub.add_argument(
-        "--timeout",
-        default=100,
-        help="max num of seconds to wait for result" " - only valid if --wait-result is set",
-    )
+    cli_shared.add_wait_result_and_timeout_args(sub)
     sub.set_defaults(func=create_transaction)
 
     sub = cli_shared.add_command_subparser(
@@ -116,9 +101,16 @@ def _add_common_arguments(args: list[str], sub: Any):
 def create_transaction(args: Any):
     validate_nonce_args(args)
     validate_receiver_args(args)
-    ensure_wallet_args_are_provided(args)
     validate_broadcast_args(args)
     validate_chain_id_args(args)
+
+    if args.data_file:
+        args.data = Path(args.data_file).read_text()
+
+    transfers = getattr(args, "token_transfers", None)
+
+    if transfers and args.data:
+        raise BadUsage("You cannot provide both data and token transfers")
 
     sender = cli_shared.prepare_sender(args)
     guardian_and_relayer_data = cli_shared.get_guardian_and_relayer_data(
@@ -126,49 +118,46 @@ def create_transaction(args: Any):
         args=args,
     )
 
-    if args.data_file:
-        args.data = Path(args.data_file).read_text()
-
     native_amount = int(args.value)
-    gas_limit = int(args.gas_limit) if args.gas_limit else 0
+    receiver = Address.new_from_bech32(args.receiver)
+    transfers = cli_shared.prepare_token_transfers(transfers) if transfers else None
 
-    transfers = getattr(args, "token_transfers", None)
-    transfers = prepare_token_transfers(transfers) if transfers else None
+    chain_id = cli_shared.get_chain_id(args.proxy, args.chain)
+    gas_estimator = cli_shared.initialize_gas_limit_estimator(args)
+    controller = TransfersController(chain_id=chain_id, gas_limit_estimator=gas_estimator)
 
-    chain_id = cli_shared.get_chain_id(args.chain, args.proxy)
-    tx_controller = TransactionsController(chain_id)
+    if not transfers:
+        tx = controller.create_transaction_for_native_token_transfer(
+            sender=sender,
+            nonce=sender.nonce,
+            receiver=receiver,
+            native_transfer_amount=native_amount,
+            data=args.data.encode() if args.data else None,
+            guardian=guardian_and_relayer_data.guardian_address,
+            relayer=guardian_and_relayer_data.relayer_address,
+            gas_limit=args.gas_limit,
+            gas_price=args.gas_price,
+        )
+    else:
+        tx = controller.create_transaction_for_transfer(
+            sender=sender,
+            nonce=sender.nonce,
+            receiver=receiver,
+            native_transfer_amount=native_amount,
+            token_transfers=transfers,
+            guardian=guardian_and_relayer_data.guardian_address,
+            relayer=guardian_and_relayer_data.relayer_address,
+            gas_limit=args.gas_limit,
+            gas_price=args.gas_price,
+        )
 
-    tx = tx_controller.create_transaction(
+    cli_shared.alter_transaction_and_sign_again_if_needed(
+        args=args,
+        tx=tx,
         sender=sender,
-        receiver=Address.new_from_bech32(args.receiver),
-        native_amount=native_amount,
-        gas_limit=gas_limit,
-        gas_price=args.gas_price,
-        nonce=sender.nonce,
-        version=args.version,
-        options=args.options,
-        token_transfers=transfers,
-        data=args.data,
         guardian_and_relayer_data=guardian_and_relayer_data,
     )
-
     cli_shared.send_or_simulate(tx, args)
-
-
-def prepare_token_transfers(transfers: list[Any]) -> list[TokenTransfer]:
-    token_computer = TokenComputer()
-    token_transfers: list[TokenTransfer] = []
-
-    for i in range(0, len(transfers) - 1, 2):
-        identifier = transfers[i]
-        amount = int(transfers[i + 1])
-        nonce = token_computer.extract_nonce_from_extended_identifier(identifier)
-
-        token = Token(identifier, nonce)
-        transfer = TokenTransfer(token, amount)
-        token_transfers.append(transfer)
-
-    return token_transfers
 
 
 def send_transaction(args: Any):
@@ -181,6 +170,8 @@ def send_transaction(args: Any):
     proxy = ProxyNetworkProvider(url=args.proxy, config=config)
 
     try:
+        cli_shared._confirm_continuation_if_required(tx)
+
         tx_hash = proxy.send_transaction(tx)
         output.set_emitted_transaction_hash(tx_hash.hex())
     finally:
@@ -195,7 +186,8 @@ def sign_transaction(args: Any):
 
     try:
         sender = cli_shared.prepare_account(args)
-    except NoWalletProvided:
+    except:
+        logger.info("No sender wallet provided. Will not sign for the sender.")
         sender = None
 
     if sender and sender.address != tx.sender:
@@ -212,16 +204,22 @@ def sign_transaction(args: Any):
 
         tx_computer = TransactionComputer()
         if tx.guardian and not tx_computer.has_options_set_for_guarded_transaction(tx):
-            raise BadUsage("Guardian wallet provided but the transaction has incorrect options.")
+            raise BadUsage("Guardian wallet provided but the transaction has incorrect options")
 
-    tx_controller = BaseTransactionsController()
-    tx_controller.sign_transaction(
-        transaction=tx,
-        sender=sender,
+    guardian_and_relayer = GuardianRelayerData(
         guardian=guardian,
+        guardian_address=tx.guardian,
         relayer=relayer,
+        relayer_address=tx.relayer,
         guardian_service_url=args.guardian_service_url,
         guardian_2fa_code=args.guardian_2fa_code,
+    )
+
+    signer = SigningWrapper()
+    signer.sign_transaction(
+        transaction=tx,
+        sender=sender,
+        guardian_and_relayer=guardian_and_relayer,
     )
 
     cli_shared.send_or_simulate(tx, args)

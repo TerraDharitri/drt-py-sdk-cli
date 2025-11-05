@@ -21,7 +21,7 @@ def fetch_prerequisites(configfile: Path):
     dependencies.install_module("testwallets", overwrite=True)
 
     if config.software.drt_go_chain.resolution == SoftwareResolution.Remote:
-        download_software_component(config.software.chain)
+        download_software_component(config.software.drt_go_chain)
 
     if config.software.drt_go_chain_proxy.resolution == SoftwareResolution.Remote:
         download_software_component(config.software.drt_go_chain_proxy)
@@ -31,7 +31,7 @@ def fetch_prerequisites(configfile: Path):
     config.software.drt_go_chain_proxy.proxy_config_must_exist()
 
     is_node_built = config.software.drt_go_chain.is_node_built()
-    is_seednode_built = config.software.chain.is_seednode_built()
+    is_seednode_built = config.software.drt_go_chain.is_seednode_built()
     is_proxy_built = config.software.drt_go_chain_proxy.is_proxy_built()
 
     is_golang_needed = not (is_node_built and is_seednode_built and is_proxy_built)

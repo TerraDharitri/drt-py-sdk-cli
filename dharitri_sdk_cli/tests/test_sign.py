@@ -8,7 +8,7 @@ def test_sign_tx():
     parent = Path(__file__).parent
     unsigned_transaction = parent / "testdata" / "transaction.json"
     signed_transaction = parent / "testdata-out" / "signed_transaction.json"
-    expected_signature = "cf3f5a028bdaf62734047a988f6d75fde46621d90d7474594fade4ab41bf45a09607959380f491539766b1eb5e01d4ab290524c358cc95eede8f5b1d0ab9780d"
+    expected_signature = "f973e03e98b0638e8f54acb5e694859e9ee964758eea79d5447e6fea35b043be79ef66d695065f8159ab133b5699b2df488cc52911c07b5a7c869f4ab7814a04"
 
     main(
         [

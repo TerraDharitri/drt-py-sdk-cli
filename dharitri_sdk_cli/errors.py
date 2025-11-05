@@ -2,8 +2,6 @@ from typing import Any, Union
 
 
 class KnownError(Exception):
-    inner = None
-
     def __init__(self, message: str, inner: Union[Any, None] = None):
         super().__init__(message)
         self.inner = inner
@@ -149,3 +147,75 @@ class IncorrectWalletError(KnownError):
 class InvalidArgumentsError(KnownError):
     def __init__(self, message: str):
         super().__init__(message)
+
+
+class LedgerError(KnownError):
+    def __init__(self, message: str):
+        super().__init__(message)
+
+
+class TransactionSigningError(KnownError):
+    def __init__(self, message: str):
+        super().__init__(message)
+
+
+class InvalidConfirmationSettingError(KnownError):
+    def __init__(self, value: str):
+        super().__init__(
+            f"Invalid confirmation setting: {value}. Valid values are: ['true', 'false', 'yes', 'no', '1', '0']."
+        )
+
+
+class InvalidEnvironmentValue(KnownError):
+    def __init__(self, message: str):
+        super().__init__(message)
+
+
+class EnvironmentProtectedError(KnownError):
+    def __init__(self, name: str):
+        super().__init__(f"This environment name is protected: {name}.")
+
+
+class UnknownEnvironmentError(KnownError):
+    def __init__(self, name: str):
+        super().__init__(f"Environment entry is not known: {name}.")
+
+
+class EnvironmentAlreadyExistsError(KnownError):
+    def __init__(self, name: str):
+        super().__init__(f"Environment entry already exists: {name}.")
+
+
+class UnknownWalletAliasError(KnownError):
+    def __init__(self, name: str):
+        super().__init__(f"Alias is not known: {name}.")
+
+
+class AliasAlreadyExistsError(KnownError):
+    def __init__(self, name: str):
+        super().__init__(f"Alias already exists: {name}.")
+
+
+class AliasProtectedError(KnownError):
+    def __init__(self, name: str):
+        super().__init__(f"This environment name is protected: {name}.")
+
+
+class InvalidAddressConfigValue(KnownError):
+    def __init__(self, message: str):
+        super().__init__(message)
+
+
+class AddressConfigFileError(KnownError):
+    def __init__(self, message: str):
+        super().__init__(message)
+
+
+class WalletError(KnownError):
+    def __init__(self, message: str):
+        super().__init__(message)
+
+
+class NetworkProviderError(KnownError):
+    def __init__(self, url: str, error: str):
+        super().__init__(f"Url = [{url}], error = {error}")

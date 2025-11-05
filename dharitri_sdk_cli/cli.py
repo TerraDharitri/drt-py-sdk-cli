@@ -10,20 +10,29 @@ from dharitri_py_sdk import LibraryConfig
 from rich.logging import RichHandler
 
 import dharitri_sdk_cli.cli_config
+import dharitri_sdk_cli.cli_config_env
+import dharitri_sdk_cli.cli_config_wallet
 import dharitri_sdk_cli.cli_contracts
 import dharitri_sdk_cli.cli_data
 import dharitri_sdk_cli.cli_delegation
 import dharitri_sdk_cli.cli_deps
 import dharitri_sdk_cli.cli_dns
 import dharitri_sdk_cli.cli_faucet
+import dharitri_sdk_cli.cli_get
+import dharitri_sdk_cli.cli_governance
 import dharitri_sdk_cli.cli_ledger
 import dharitri_sdk_cli.cli_localnet
+import dharitri_sdk_cli.cli_multisig
+import dharitri_sdk_cli.cli_tokens
 import dharitri_sdk_cli.cli_transactions
 import dharitri_sdk_cli.cli_validator_wallet
 import dharitri_sdk_cli.cli_validators
 import dharitri_sdk_cli.cli_wallet
 import dharitri_sdk_cli.version
 from dharitri_sdk_cli import config, errors, utils, ux
+from dharitri_sdk_cli.cli_shared import set_proxy_from_config_if_not_provided
+from dharitri_sdk_cli.config_env import get_address_hrp
+from dharitri_sdk_cli.constants import LOG_LEVELS, SDK_PATH
 
 logger = logging.getLogger("cli")
 
@@ -42,11 +51,12 @@ def main(cli_args: list[str] = sys.argv[1:]):
 
 
 def _do_main(cli_args: list[str]):
-    utils.ensure_folder(config.SDK_PATH)
-    argv_with_config_args = config.add_config_args(cli_args)
-    parser = setup_parser(argv_with_config_args)
+    utils.ensure_folder(SDK_PATH)
+    parser = setup_parser(cli_args)
     argcomplete.autocomplete(parser)
-    args = parser.parse_args(argv_with_config_args)
+
+    _handle_global_arguments(cli_args)
+    args = parser.parse_args(cli_args)
 
     if args.verbose:
         logging.basicConfig(
@@ -56,22 +66,21 @@ def _do_main(cli_args: list[str]):
             handlers=[RichHandler(show_time=False, rich_tracebacks=True)],
         )
     else:
+        level: str = args.log_level
         logging.basicConfig(
-            level="INFO",
+            level=level.upper(),
             format="%(name)s: %(message)s",
             handlers=[RichHandler(show_time=False, rich_tracebacks=True)],
         )
 
     verify_deprecated_entries_in_config_file()
-    default_hrp = config.get_address_hrp()
+    default_hrp = get_address_hrp()
     LibraryConfig.default_address_hrp = default_hrp
-
-    if hasattr(args, "recall_nonce") and args.recall_nonce:
-        logger.warning("The --recall-nonce flag is DEPRECATED. The nonce is fetched from the network by default.")
 
     if not hasattr(args, "func"):
         parser.print_help()
     else:
+        set_proxy_from_config_if_not_provided(args)
         args.func(args)
 
 
@@ -83,7 +92,7 @@ def setup_parser(args: list[str]):
 -----------
 DESCRIPTION
 -----------
-drtpy is part of the dharitri-sdk and consists of Command Line Tools and Python SDK
+drtpy is part of the dharitri-py-sdk and consists of Command Line Tools and Python SDK
 for interacting with the Blockchain (in general) and with Smart Contracts (in particular).
 
 drtpy targets a broad audience of users and developers.
@@ -105,10 +114,18 @@ See:
         version=f"DharitrI Python CLI (drtpy) {version}",
     )
     parser.add_argument("--verbose", action="store_true", default=False)
+    parser.add_argument(
+        "--log-level",
+        type=str,
+        default=config.get_log_level_from_config(),
+        choices=LOG_LEVELS,
+        help="default: %(default)s",
+    )
 
     subparsers = parser.add_subparsers()
     commands: list[Any] = []
 
+    commands.append(dharitri_sdk_cli.cli_config_wallet.setup_parser(subparsers))
     commands.append(dharitri_sdk_cli.cli_contracts.setup_parser(args, subparsers))
     commands.append(dharitri_sdk_cli.cli_transactions.setup_parser(args, subparsers))
     commands.append(dharitri_sdk_cli.cli_validators.setup_parser(args, subparsers))
@@ -122,6 +139,11 @@ See:
     commands.append(dharitri_sdk_cli.cli_delegation.setup_parser(args, subparsers))
     commands.append(dharitri_sdk_cli.cli_dns.setup_parser(args, subparsers))
     commands.append(dharitri_sdk_cli.cli_faucet.setup_parser(args, subparsers))
+    commands.append(dharitri_sdk_cli.cli_multisig.setup_parser(args, subparsers))
+    commands.append(dharitri_sdk_cli.cli_governance.setup_parser(args, subparsers))
+    commands.append(dharitri_sdk_cli.cli_config_env.setup_parser(subparsers))
+    commands.append(dharitri_sdk_cli.cli_get.setup_parser(subparsers))
+    commands.append(dharitri_sdk_cli.cli_tokens.setup_parser(args, subparsers))
 
     parser.epilog = """
 ----------------------
@@ -145,6 +167,26 @@ def verify_deprecated_entries_in_config_file():
         message += f"-> {entry} \n"
 
     ux.show_warning(message.rstrip("\n"))
+
+
+def _handle_global_arguments(args: list[str]):
+    """
+    Handle global arguments like --verbose and --log-level.
+    """
+    log_level_arg = "--log-level"
+    if log_level_arg in args:
+        index = args.index(log_level_arg)
+        if index + 1 >= len(args):
+            raise ValueError(f"Argument {log_level_arg} must be followed by a log level value.")
+
+        log_arg = args.pop(index)
+        log_value = args.pop(index)
+        args.insert(0, log_value)
+        args.insert(0, log_arg)
+
+    if "--verbose" in args:
+        args.remove("--verbose")
+        args.insert(0, "--verbose")
 
 
 if __name__ == "__main__":

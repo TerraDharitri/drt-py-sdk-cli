@@ -150,22 +150,36 @@ def is_arg_present(args: list[str], key: str) -> bool:
     return False
 
 
-def log_explorer(chain: str, name: str, path: str, details: str):
-    networks = {
-        "1": ("DharitrI Mainnet Explorer", "https://explorer.dharitri.org"),
-        "T": ("DharitrI Testnet Explorer", "https://testnet-explorer.dharitri.org"),
-        "D": ("DharitrI Devnet Explorer", "https://devnet-explorer.dharitri.org"),
+def log_explorer(name: str, explorer: str, path: str, details: str):
+    logger.info(f"View this {name} in the DharitrI Explorer: {explorer}/{path}/{details}")
+
+
+def log_explorer_contract_address(chain: str, address: str, explorer_url: Optional[str] = ""):
+    if explorer_url:
+        log_explorer("contract address", explorer_url, "accounts", address)
+    else:
+        explorer = get_explorer_by_chain_id(chain_id=chain)
+        if explorer:
+            log_explorer("contract address", explorer, "accounts", address)
+
+
+def log_explorer_transaction(chain: str, transaction_hash: str, explorer_url: Optional[str] = ""):
+    if explorer_url:
+        log_explorer("transaction", explorer_url, "transactions", transaction_hash)
+    else:
+        explorer = get_explorer_by_chain_id(chain_id=chain)
+        if explorer:
+            log_explorer("transaction", explorer, "transactions", transaction_hash)
+
+
+def get_explorer_by_chain_id(chain_id: str) -> str:
+    explorers_by_chain_id = {
+        "1": "https://explorer.dharitri.org",
+        "T": "https://testnet-explorer.dharitri.org",
+        "D": "https://devnet-explorer.dharitri.org",
     }
+
     try:
-        explorer_name, explorer_url = networks[chain]
-        logger.info(f"View this {name} in the {explorer_name}: {explorer_url}/{path}/{details}")
+        return explorers_by_chain_id[chain_id]
     except KeyError:
-        return
-
-
-def log_explorer_contract_address(chain: str, address: str):
-    log_explorer(chain, "contract address", "accounts", address)
-
-
-def log_explorer_transaction(chain: str, transaction_hash: str):
-    log_explorer(chain, "transaction", "transactions", transaction_hash)
+        return ""

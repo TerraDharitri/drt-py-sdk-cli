@@ -5,4 +5,5 @@ types-requests
 ledgercomm[hid]
 rich==13.3.4
 argcomplete==3.2.2
-dharitri-py-sdk==0.0.2
+
+dharitri-py-sdk[ledger]==0.0.6

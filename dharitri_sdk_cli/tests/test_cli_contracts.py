@@ -270,6 +270,7 @@ def test_contract_flow(capsys: Any):
 
 
 def test_contract_deploy_without_required_arguments():
+    """This test passes with an unaltered config. If proxy is set in the config, the test will fail due to drtpy fetching the nonce and the chain ID."""
     alice = f"{parent}/testdata/alice.pem"
     adder = f"{parent}/testdata/adder.wasm"
 
@@ -358,8 +359,8 @@ def test_contract_deploy_with_abi(capsys: Any):
             "5000000",
             "--arguments",
             "2",
-            "drt1c7pyyq2yaq5k7atn9z6qn5qkxwlc6zwc4vg7uuxn9ssy7evfh5jq4nm79l",
-            "drt1kp072dwz0arfz8m5lzmlypgu2nme9l9q33aty0znualvanfvmy5qd3yy8q",
+            "drt1qyu5wthldzr8wx5c9ucg8kjagg0jfs53s8nr3zpz3hypefsdd8ssey5egf",
+            "drt1cqqxak4wun7508e0yj9ng843r6hv4mzd0hhpjpsejkpn9wa9yq8s0ztfl2",
         ]
     )
     assert not return_code
@@ -393,10 +394,10 @@ def test_contract_deploy_with_abi(capsys: Any):
     deploy_with_abi_data = get_transaction_data(capsys)
     assert deploy_without_abi_data == deploy_with_abi_data
     assert deploy_without_abi_data.endswith(
-        "@02@c782420144e8296f757328b409d01633bf8d09d8ab11ee70d32c204f6589bd24@c0006edaaee4fd479f2f248b341eb11eaecaec4d7dee190619958332bba5200f"
+        "@02@0139472eff6886771a982f3083da5d421f24c29181e63888228dc81ca60d69e1@c0006edaaee4fd479f2f248b341eb11eaecaec4d7dee190619958332bba5200f"
     )
     assert deploy_with_abi_data.endswith(
-        "@02@c782420144e8296f757328b409d01633bf8d09d8ab11ee70d32c204f6589bd24@c0006edaaee4fd479f2f248b341eb11eaecaec4d7dee190619958332bba5200f"
+        "@02@0139472eff6886771a982f3083da5d421f24c29181e63888228dc81ca60d69e1@c0006edaaee4fd479f2f248b341eb11eaecaec4d7dee190619958332bba5200f"
     )
 
 
@@ -605,6 +606,27 @@ def test_contract_query(capsys: Any):
     assert not return_code
     response = get_query_response(capsys)
     assert response == [14]
+
+
+def test_contract_deploy_using_gas_estimator(capsys: Any):
+    return_code = main(
+        [
+            "contract",
+            "deploy",
+            "--bytecode",
+            f"{parent}/testdata/adder.wasm",
+            "--pem",
+            f"{parent}/testdata/testUser.pem",
+            "--proxy",
+            "https://devnet-api.dharitri.org",
+            "--arguments",
+            "0",
+        ]
+    )
+    assert not return_code
+    output = _read_stdout(capsys)
+    transaction = json.loads(output)["emittedTransaction"]
+    assert transaction["gasLimit"] > 50_000
 
 
 def _read_stdout(capsys: Any) -> str:
