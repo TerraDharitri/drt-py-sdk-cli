@@ -6,7 +6,6 @@ from dharitri_sdk_cli.errors import InvalidArgumentsError
 def validate_transaction_args(args: Any):
     validate_nonce_args(args)
     validate_receiver_args(args)
-    validate_gas_limit_args(args)
 
 
 def validate_nonce_args(args: Any):
@@ -27,16 +26,6 @@ def validate_gas_limit_args(args: Any):
     """Ensure that gas_limit is provided."""
     if hasattr(args, "gas_limit") and not args.gas_limit:
         raise InvalidArgumentsError("--gas-limit must be provided")
-
-
-def ensure_wallet_args_are_provided(args: Any):
-    signing_methods = [args.pem, args.keyfile, args.ledger]
-
-    if all(signing_methods):
-        raise InvalidArgumentsError("Only one of --pem, --keyfile, or --ledger must be provided")
-
-    if not any(signing_methods):
-        raise InvalidArgumentsError("One of --pem, --keyfile, or --ledger must be provided")
 
 
 def ensure_relayer_wallet_args_are_provided(args: Any):

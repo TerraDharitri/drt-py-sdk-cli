@@ -57,7 +57,7 @@ jobs:
         pip install build
 
     - name: Change package name for drtpy
-      run: sed -i 's/name = "dharitri-sdk-cli"/name = "drtpy"/' pyproject.toml
+      run: sed -i 's/name = "dharitri-py-sdk-cli"/name = "drtpy"/' pyproject.toml
 
     - name: Build and publish drtpy package
       run: python -m build

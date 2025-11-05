@@ -36,14 +36,14 @@ def test_create_new_delegation_contract(capsys: Any):
     transaction = tx["emittedTransaction"]
 
     assert data == "createNewDelegationContract@021e19e0c9bab2400000@64"
-    assert transaction["sender"] == "drt1c7pyyq2yaq5k7atn9z6qn5qkxwlc6zwc4vg7uuxn9ssy7evfh5jq4nm79l"
-    assert transaction["receiver"] == "drt1yvesqqqqqqqqqqqqqqqqqqqqqqqqyvesqqqqqqqqqqqqqqqyllls4jxmwv"
+    assert transaction["sender"] == "drt1qyu5wthldzr8wx5c9ucg8kjagg0jfs53s8nr3zpz3hypefsdd8ssey5egf"
+    assert transaction["receiver"] == "drt1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqylllsz8he8y"
     assert transaction["chainID"] == "T"
     assert transaction["gasLimit"] == 60126500
     assert transaction["value"] == "1250000000000000000000"
     assert (
         transaction["signature"]
-        == "b577f6556330fca56d69abb15c31aab62aabbf0e651fe2a3a0400c0175a1f7f7d4d4469d46c362db54e782f91fc982d269826ae80227766a2db4012bdcd0ec03"
+        == "2724ef55b19cd8af895fbb3702d86eedc63c175c4765c1b826480dca6e65f97380d9c89a2ab7dfec52a66a24f43acb2b79460fbfeef0e4fd45351335b8412403"
     )
 
 
@@ -73,14 +73,14 @@ def test_create_new_delegation_contract_with_provided_gas_limit(capsys: Any):
     transaction = tx["emittedTransaction"]
 
     assert data == "createNewDelegationContract@021e19e0c9bab2400000@64"
-    assert transaction["sender"] == "drt1c7pyyq2yaq5k7atn9z6qn5qkxwlc6zwc4vg7uuxn9ssy7evfh5jq4nm79l"
-    assert transaction["receiver"] == "drt1yvesqqqqqqqqqqqqqqqqqqqqqqqqyvesqqqqqqqqqqqqqqqyllls4jxmwv"
+    assert transaction["sender"] == "drt1qyu5wthldzr8wx5c9ucg8kjagg0jfs53s8nr3zpz3hypefsdd8ssey5egf"
+    assert transaction["receiver"] == "drt1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqylllsz8he8y"
     assert transaction["chainID"] == "T"
     assert transaction["gasLimit"] == 60126501
     assert transaction["value"] == "1250000000000000000000"
     assert (
         transaction["signature"]
-        == "da0bfa5a04308be1a149d516403a0d088ea244f844e4270c1380bc54fc4e9c8afaa6528ace88e2de974afbab1c8564233ad018cac5c3eeb875cdcee793119301"
+        == "ac8b6de84d320853ba64c8abd60ea244b56e5ef4337d464cc35d1da7a1c585ba2fc4ce7a6f3778841d709e0d730a27ed554ba39fb9f85bada2312fca70c8e80f"
     )
 
 
@@ -94,7 +94,7 @@ def test_add_nodes(capsys: Any):
             "--validators-pem",
             str(validators_file),
             "--delegation-contract",
-            "drt1yvesqqqqqqqqqqqqqqqqqqqqqqqqyvesqqqqqqqqqqqqqthllllswa9mfp",
+            "drt1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqthllllseg5eqf",
             "--pem",
             str(alice),
             "--chain",
@@ -109,14 +109,14 @@ def test_add_nodes(capsys: Any):
 
     assert (
         data
-        == "addNodes@f8910e47cf9464777c912e6390758bb39715fffcb861b184017920e4a807b42553f2f21e7f3914b81bcf58b66a72ab16d97013ae1cff807cefc977ef8cbf116258534b9e46d19528042d16ef8374404a89b184e0a4ee18c77c49e454d04eae8d@4dd9ac4250060e1adb1a7f8beb4ad8a53a8e08ae04c00d228a2b6de364b7ea1c07390d84865a0cd5d9145f2ddd6cb809@1b4e60e6d100cdf234d3427494dac55fbac49856cadc86bcb13a01b9bb05a0d9143e86c186c948e7ae9e52427c9523102efe9019a2a9c06db02993f2e3e6756576ae5a3ec7c235d548bc79de1a6990e1120ae435cb48f7fc436c9f9098b92a0d@90c52a1a11b058a95998c4761668283659c76e5c56ebf7937f8c14be0126f52ae566c3838570e5bba6bbbcddc60c8699@e5dc552b4b170cdec4405ff8f9af20313bf0e2756d06c35877b6fbcfa6b354a7b3e2d439ea87999befb09a8fa1b3f014e57ec747bf738c4199338fcd4a87b373dd62f5c8329f1f5f245956bbb06685596a2e83dc38befa63e4a2b5c4ce408506@e299c68b056e4ebc7a39ae50e2091e1ccd63ca11a2429e26dac1901396f4a338c34dbd87b20d1ec8f67e4af18a7a790d"
+        == "addNodes@e7beaa95b3877f47348df4dd1cb578a4f7cabf7a20bfeefe5cdd263878ff132b765e04fef6f40c93512b666c47ed7719b8902f6c922c04247989b7137e837cc81a62e54712471c97a2ddab75aa9c2f58f813ed4c0fa722bde0ab718bff382208@307ef00b648eed52ce4e95f8155f2e65491addd49266254f7c32ff06622e335752a6a6ad2efeb2534ec0db6a431b4989@78689fd4b1e2e434d567fe01e61598a42717d83124308266bd09ccc15d2339dd318c019914b86ac29adbae5dd8a02d0307425e9bd85a296e94943708c72f8c670f0b7c50a890a5719088dbd9f1d062cad9acffa06df834106eebe1a4257ef00d@4c90003d4b535fe709b6583708ae276e29558c58d160ad6241c3063e590611a2e327f2b8299b4955179a85eab50b4587@7188b234a8bf834f2e6258012aa09a2ab93178ffab9c789480275f61fe02cd1b9a58ddc63b79a73abea9e2b7ac5cac0b0d4324eff50aca2f0ec946b9ae6797511fa3ce461b57e77129cba8ab3b51147695d4ce889cbe67905f6586b4e4f22491@1d6cf6b0a38fa5c10df6493eae0b14c5d119d9f7d3d3e790a047e4e7c09919f64f910971ceef380b49f70fc982d07d19"
     )
-    assert transaction["sender"] == "drt1c7pyyq2yaq5k7atn9z6qn5qkxwlc6zwc4vg7uuxn9ssy7evfh5jq4nm79l"
-    assert transaction["receiver"] == "drt1yvesqqqqqqqqqqqqqqqqqqqqqqqqyvesqqqqqqqqqqqqqthllllswa9mfp"
+    assert transaction["sender"] == "drt1qyu5wthldzr8wx5c9ucg8kjagg0jfs53s8nr3zpz3hypefsdd8ssey5egf"
+    assert transaction["receiver"] == "drt1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqthllllseg5eqf"
     assert transaction["gasLimit"] == 20367000
     assert (
         transaction["signature"]
-        == "e118368321df98abfa93349b419b56dd1b155434d9a978edfa5369f3270feab6371bfdd363f75d7fa68fe7c05e546d59605f39ed633d0399d19adb6a38dc770e"
+        == "e8638b2389bd5f786aee41e5a635b6fbb66afbbb5de27e6c9196c0b7dc0138c9ae443ef330d6b07893c7bb32523570224c6a079f848c32cf3565567f588f6a09"
     )
 
 
@@ -130,7 +130,7 @@ def test_add_nodes_with_gas_limit(capsys: Any):
             "--validators-pem",
             str(validators_file),
             "--delegation-contract",
-            "drt1yvesqqqqqqqqqqqqqqqqqqqqqqqqyvesqqqqqqqqqqqqqthllllswa9mfp",
+            "drt1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqthllllseg5eqf",
             "--pem",
             str(alice),
             "--chain",
@@ -147,14 +147,14 @@ def test_add_nodes_with_gas_limit(capsys: Any):
 
     assert (
         data
-        == "addNodes@f8910e47cf9464777c912e6390758bb39715fffcb861b184017920e4a807b42553f2f21e7f3914b81bcf58b66a72ab16d97013ae1cff807cefc977ef8cbf116258534b9e46d19528042d16ef8374404a89b184e0a4ee18c77c49e454d04eae8d@4dd9ac4250060e1adb1a7f8beb4ad8a53a8e08ae04c00d228a2b6de364b7ea1c07390d84865a0cd5d9145f2ddd6cb809@1b4e60e6d100cdf234d3427494dac55fbac49856cadc86bcb13a01b9bb05a0d9143e86c186c948e7ae9e52427c9523102efe9019a2a9c06db02993f2e3e6756576ae5a3ec7c235d548bc79de1a6990e1120ae435cb48f7fc436c9f9098b92a0d@90c52a1a11b058a95998c4761668283659c76e5c56ebf7937f8c14be0126f52ae566c3838570e5bba6bbbcddc60c8699@e5dc552b4b170cdec4405ff8f9af20313bf0e2756d06c35877b6fbcfa6b354a7b3e2d439ea87999befb09a8fa1b3f014e57ec747bf738c4199338fcd4a87b373dd62f5c8329f1f5f245956bbb06685596a2e83dc38befa63e4a2b5c4ce408506@e299c68b056e4ebc7a39ae50e2091e1ccd63ca11a2429e26dac1901396f4a338c34dbd87b20d1ec8f67e4af18a7a790d"
+        == "addNodes@e7beaa95b3877f47348df4dd1cb578a4f7cabf7a20bfeefe5cdd263878ff132b765e04fef6f40c93512b666c47ed7719b8902f6c922c04247989b7137e837cc81a62e54712471c97a2ddab75aa9c2f58f813ed4c0fa722bde0ab718bff382208@307ef00b648eed52ce4e95f8155f2e65491addd49266254f7c32ff06622e335752a6a6ad2efeb2534ec0db6a431b4989@78689fd4b1e2e434d567fe01e61598a42717d83124308266bd09ccc15d2339dd318c019914b86ac29adbae5dd8a02d0307425e9bd85a296e94943708c72f8c670f0b7c50a890a5719088dbd9f1d062cad9acffa06df834106eebe1a4257ef00d@4c90003d4b535fe709b6583708ae276e29558c58d160ad6241c3063e590611a2e327f2b8299b4955179a85eab50b4587@7188b234a8bf834f2e6258012aa09a2ab93178ffab9c789480275f61fe02cd1b9a58ddc63b79a73abea9e2b7ac5cac0b0d4324eff50aca2f0ec946b9ae6797511fa3ce461b57e77129cba8ab3b51147695d4ce889cbe67905f6586b4e4f22491@1d6cf6b0a38fa5c10df6493eae0b14c5d119d9f7d3d3e790a047e4e7c09919f64f910971ceef380b49f70fc982d07d19"
     )
-    assert transaction["sender"] == "drt1c7pyyq2yaq5k7atn9z6qn5qkxwlc6zwc4vg7uuxn9ssy7evfh5jq4nm79l"
-    assert transaction["receiver"] == "drt1yvesqqqqqqqqqqqqqqqqqqqqqqqqyvesqqqqqqqqqqqqqthllllswa9mfp"
+    assert transaction["sender"] == "drt1qyu5wthldzr8wx5c9ucg8kjagg0jfs53s8nr3zpz3hypefsdd8ssey5egf"
+    assert transaction["receiver"] == "drt1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqthllllseg5eqf"
     assert transaction["gasLimit"] == 20367001
     assert (
         transaction["signature"]
-        == "06768601c172b9600861b210f40263d9ccc7e17ad2e1b25603cfe2dbffbe9119ad927459dae08a6167f487a44353202b248147c69909a181c39ee700d301b60e"
+        == "6770df37437a2dad18ce60fc33c753743345d96f56b0bd6095bdcb3b3ae66ecccc639e7bf4d4091636c2a93ac69bd8fd6a3f8b565a7d1db385362bd4d1d6aa05"
     )
 
 
@@ -166,7 +166,7 @@ def test_remove_nodes_with_bls_keys(capsys: Any):
             "--bls-keys",
             f"{first_bls_key},{second_bls_key}",
             "--delegation-contract",
-            "drt1yvesqqqqqqqqqqqqqqqqqqqqqqqqyvesqqqqqqqqqqqqqthllllswa9mfp",
+            "drt1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqthllllseg5eqf",
             "--pem",
             str(alice),
             "--chain",
@@ -183,8 +183,8 @@ def test_remove_nodes_with_bls_keys(capsys: Any):
         data
         == "removeNodes@f8910e47cf9464777c912e6390758bb39715fffcb861b184017920e4a807b42553f2f21e7f3914b81bcf58b66a72ab16d97013ae1cff807cefc977ef8cbf116258534b9e46d19528042d16ef8374404a89b184e0a4ee18c77c49e454d04eae8d@1b4e60e6d100cdf234d3427494dac55fbac49856cadc86bcb13a01b9bb05a0d9143e86c186c948e7ae9e52427c9523102efe9019a2a9c06db02993f2e3e6756576ae5a3ec7c235d548bc79de1a6990e1120ae435cb48f7fc436c9f9098b92a0d"
     )
-    assert transaction["sender"] == "drt1c7pyyq2yaq5k7atn9z6qn5qkxwlc6zwc4vg7uuxn9ssy7evfh5jq4nm79l"
-    assert transaction["receiver"] == "drt1yvesqqqqqqqqqqqqqqqqqqqqqqqqyvesqqqqqqqqqqqqqthllllswa9mfp"
+    assert transaction["sender"] == "drt1qyu5wthldzr8wx5c9ucg8kjagg0jfs53s8nr3zpz3hypefsdd8ssey5egf"
+    assert transaction["receiver"] == "drt1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqthllllseg5eqf"
     assert transaction["gasLimit"] == 13645500
 
 
@@ -196,7 +196,7 @@ def test_remove_nodes_with_validators_file(capsys: Any):
             "--validators-pem",
             str(validators_file),
             "--delegation-contract",
-            "drt1yvesqqqqqqqqqqqqqqqqqqqqqqqqyvesqqqqqqqqqqqqqthllllswa9mfp",
+            "drt1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqthllllseg5eqf",
             "--pem",
             str(alice),
             "--chain",
@@ -213,8 +213,8 @@ def test_remove_nodes_with_validators_file(capsys: Any):
         data
         == "removeNodes@f8910e47cf9464777c912e6390758bb39715fffcb861b184017920e4a807b42553f2f21e7f3914b81bcf58b66a72ab16d97013ae1cff807cefc977ef8cbf116258534b9e46d19528042d16ef8374404a89b184e0a4ee18c77c49e454d04eae8d@1b4e60e6d100cdf234d3427494dac55fbac49856cadc86bcb13a01b9bb05a0d9143e86c186c948e7ae9e52427c9523102efe9019a2a9c06db02993f2e3e6756576ae5a3ec7c235d548bc79de1a6990e1120ae435cb48f7fc436c9f9098b92a0d"
     )
-    assert transaction["sender"] == "drt1c7pyyq2yaq5k7atn9z6qn5qkxwlc6zwc4vg7uuxn9ssy7evfh5jq4nm79l"
-    assert transaction["receiver"] == "drt1yvesqqqqqqqqqqqqqqqqqqqqqqqqyvesqqqqqqqqqqqqqthllllswa9mfp"
+    assert transaction["sender"] == "drt1qyu5wthldzr8wx5c9ucg8kjagg0jfs53s8nr3zpz3hypefsdd8ssey5egf"
+    assert transaction["receiver"] == "drt1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqthllllseg5eqf"
     assert transaction["gasLimit"] == 13645500
 
 
@@ -226,7 +226,7 @@ def test_stake_nodes_with_bls_keys(capsys: Any):
             "--validators-pem",
             str(validators_file),
             "--delegation-contract",
-            "drt1yvesqqqqqqqqqqqqqqqqqqqqqqqqyvesqqqqqqqqqqqqqthllllswa9mfp",
+            "drt1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqthllllseg5eqf",
             "--pem",
             str(alice),
             "--chain",
@@ -243,8 +243,8 @@ def test_stake_nodes_with_bls_keys(capsys: Any):
         data
         == "stakeNodes@f8910e47cf9464777c912e6390758bb39715fffcb861b184017920e4a807b42553f2f21e7f3914b81bcf58b66a72ab16d97013ae1cff807cefc977ef8cbf116258534b9e46d19528042d16ef8374404a89b184e0a4ee18c77c49e454d04eae8d@1b4e60e6d100cdf234d3427494dac55fbac49856cadc86bcb13a01b9bb05a0d9143e86c186c948e7ae9e52427c9523102efe9019a2a9c06db02993f2e3e6756576ae5a3ec7c235d548bc79de1a6990e1120ae435cb48f7fc436c9f9098b92a0d"
     )
-    assert transaction["sender"] == "drt1c7pyyq2yaq5k7atn9z6qn5qkxwlc6zwc4vg7uuxn9ssy7evfh5jq4nm79l"
-    assert transaction["receiver"] == "drt1yvesqqqqqqqqqqqqqqqqqqqqqqqqyvesqqqqqqqqqqqqqthllllswa9mfp"
+    assert transaction["sender"] == "drt1qyu5wthldzr8wx5c9ucg8kjagg0jfs53s8nr3zpz3hypefsdd8ssey5egf"
+    assert transaction["receiver"] == "drt1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqthllllseg5eqf"
     assert transaction["gasLimit"] == 18644000
 
 
@@ -256,7 +256,7 @@ def test_stake_nodes_with_validators_file(capsys: Any):
             "--bls-keys",
             f"{first_bls_key},{second_bls_key}",
             "--delegation-contract",
-            "drt1yvesqqqqqqqqqqqqqqqqqqqqqqqqyvesqqqqqqqqqqqqqthllllswa9mfp",
+            "drt1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqthllllseg5eqf",
             "--pem",
             str(alice),
             "--chain",
@@ -273,8 +273,8 @@ def test_stake_nodes_with_validators_file(capsys: Any):
         data
         == "stakeNodes@f8910e47cf9464777c912e6390758bb39715fffcb861b184017920e4a807b42553f2f21e7f3914b81bcf58b66a72ab16d97013ae1cff807cefc977ef8cbf116258534b9e46d19528042d16ef8374404a89b184e0a4ee18c77c49e454d04eae8d@1b4e60e6d100cdf234d3427494dac55fbac49856cadc86bcb13a01b9bb05a0d9143e86c186c948e7ae9e52427c9523102efe9019a2a9c06db02993f2e3e6756576ae5a3ec7c235d548bc79de1a6990e1120ae435cb48f7fc436c9f9098b92a0d"
     )
-    assert transaction["sender"] == "drt1c7pyyq2yaq5k7atn9z6qn5qkxwlc6zwc4vg7uuxn9ssy7evfh5jq4nm79l"
-    assert transaction["receiver"] == "drt1yvesqqqqqqqqqqqqqqqqqqqqqqqqyvesqqqqqqqqqqqqqthllllswa9mfp"
+    assert transaction["sender"] == "drt1qyu5wthldzr8wx5c9ucg8kjagg0jfs53s8nr3zpz3hypefsdd8ssey5egf"
+    assert transaction["receiver"] == "drt1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqthllllseg5eqf"
     assert transaction["gasLimit"] == 18644000
 
 
@@ -286,7 +286,7 @@ def test_unbond_nodes(capsys: Any):
             "--bls-keys",
             f"{first_bls_key},{second_bls_key}",
             "--delegation-contract",
-            "drt1yvesqqqqqqqqqqqqqqqqqqqqqqqqyvesqqqqqqqqqqqqqthllllswa9mfp",
+            "drt1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqthllllseg5eqf",
             "--pem",
             str(alice),
             "--chain",
@@ -303,8 +303,8 @@ def test_unbond_nodes(capsys: Any):
         data
         == "unBondNodes@f8910e47cf9464777c912e6390758bb39715fffcb861b184017920e4a807b42553f2f21e7f3914b81bcf58b66a72ab16d97013ae1cff807cefc977ef8cbf116258534b9e46d19528042d16ef8374404a89b184e0a4ee18c77c49e454d04eae8d@1b4e60e6d100cdf234d3427494dac55fbac49856cadc86bcb13a01b9bb05a0d9143e86c186c948e7ae9e52427c9523102efe9019a2a9c06db02993f2e3e6756576ae5a3ec7c235d548bc79de1a6990e1120ae435cb48f7fc436c9f9098b92a0d"
     )
-    assert transaction["sender"] == "drt1c7pyyq2yaq5k7atn9z6qn5qkxwlc6zwc4vg7uuxn9ssy7evfh5jq4nm79l"
-    assert transaction["receiver"] == "drt1yvesqqqqqqqqqqqqqqqqqqqqqqqqyvesqqqqqqqqqqqqqthllllswa9mfp"
+    assert transaction["sender"] == "drt1qyu5wthldzr8wx5c9ucg8kjagg0jfs53s8nr3zpz3hypefsdd8ssey5egf"
+    assert transaction["receiver"] == "drt1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqthllllseg5eqf"
     assert transaction["gasLimit"] == 18645500
 
 
@@ -316,7 +316,7 @@ def test_unstake_nodes(capsys: Any):
             "--bls-keys",
             f"{first_bls_key},{second_bls_key}",
             "--delegation-contract",
-            "drt1yvesqqqqqqqqqqqqqqqqqqqqqqqqyvesqqqqqqqqqqqqqthllllswa9mfp",
+            "drt1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqthllllseg5eqf",
             "--pem",
             str(alice),
             "--chain",
@@ -333,8 +333,8 @@ def test_unstake_nodes(capsys: Any):
         data
         == "unStakeNodes@f8910e47cf9464777c912e6390758bb39715fffcb861b184017920e4a807b42553f2f21e7f3914b81bcf58b66a72ab16d97013ae1cff807cefc977ef8cbf116258534b9e46d19528042d16ef8374404a89b184e0a4ee18c77c49e454d04eae8d@1b4e60e6d100cdf234d3427494dac55fbac49856cadc86bcb13a01b9bb05a0d9143e86c186c948e7ae9e52427c9523102efe9019a2a9c06db02993f2e3e6756576ae5a3ec7c235d548bc79de1a6990e1120ae435cb48f7fc436c9f9098b92a0d"
     )
-    assert transaction["sender"] == "drt1c7pyyq2yaq5k7atn9z6qn5qkxwlc6zwc4vg7uuxn9ssy7evfh5jq4nm79l"
-    assert transaction["receiver"] == "drt1yvesqqqqqqqqqqqqqqqqqqqqqqqqyvesqqqqqqqqqqqqqthllllswa9mfp"
+    assert transaction["sender"] == "drt1qyu5wthldzr8wx5c9ucg8kjagg0jfs53s8nr3zpz3hypefsdd8ssey5egf"
+    assert transaction["receiver"] == "drt1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqthllllseg5eqf"
     assert transaction["gasLimit"] == 18647000
 
 
@@ -346,7 +346,7 @@ def test_unjail_nodes(capsys: Any):
             "--bls-keys",
             f"{first_bls_key},{second_bls_key}",
             "--delegation-contract",
-            "drt1yvesqqqqqqqqqqqqqqqqqqqqqqqqyvesqqqqqqqqqqqqqthllllswa9mfp",
+            "drt1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqthllllseg5eqf",
             "--value",
             "5000000000000000000",
             "--pem",
@@ -365,8 +365,8 @@ def test_unjail_nodes(capsys: Any):
         data
         == "unJailNodes@f8910e47cf9464777c912e6390758bb39715fffcb861b184017920e4a807b42553f2f21e7f3914b81bcf58b66a72ab16d97013ae1cff807cefc977ef8cbf116258534b9e46d19528042d16ef8374404a89b184e0a4ee18c77c49e454d04eae8d@1b4e60e6d100cdf234d3427494dac55fbac49856cadc86bcb13a01b9bb05a0d9143e86c186c948e7ae9e52427c9523102efe9019a2a9c06db02993f2e3e6756576ae5a3ec7c235d548bc79de1a6990e1120ae435cb48f7fc436c9f9098b92a0d"
     )
-    assert transaction["sender"] == "drt1c7pyyq2yaq5k7atn9z6qn5qkxwlc6zwc4vg7uuxn9ssy7evfh5jq4nm79l"
-    assert transaction["receiver"] == "drt1yvesqqqqqqqqqqqqqqqqqqqqqqqqyvesqqqqqqqqqqqqqthllllswa9mfp"
+    assert transaction["sender"] == "drt1qyu5wthldzr8wx5c9ucg8kjagg0jfs53s8nr3zpz3hypefsdd8ssey5egf"
+    assert transaction["receiver"] == "drt1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqthllllseg5eqf"
     assert transaction["gasLimit"] == 13645500
     assert transaction["value"] == "5000000000000000000"
 
@@ -379,7 +379,7 @@ def test_change_service_fee(capsys: Any):
             "--service-fee",
             "100",
             "--delegation-contract",
-            "drt1yvesqqqqqqqqqqqqqqqqqqqqqqqqyvesqqqqqqqqqqqqqthllllswa9mfp",
+            "drt1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqthllllseg5eqf",
             "--pem",
             str(alice),
             "--chain",
@@ -393,8 +393,8 @@ def test_change_service_fee(capsys: Any):
     transaction = tx["emittedTransaction"]
 
     assert data == "changeServiceFee@64"
-    assert transaction["sender"] == "drt1c7pyyq2yaq5k7atn9z6qn5qkxwlc6zwc4vg7uuxn9ssy7evfh5jq4nm79l"
-    assert transaction["receiver"] == "drt1yvesqqqqqqqqqqqqqqqqqqqqqqqqyvesqqqqqqqqqqqqqthllllswa9mfp"
+    assert transaction["sender"] == "drt1qyu5wthldzr8wx5c9ucg8kjagg0jfs53s8nr3zpz3hypefsdd8ssey5egf"
+    assert transaction["receiver"] == "drt1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqthllllseg5eqf"
     assert transaction["gasLimit"] == 11078500
 
 
@@ -406,7 +406,7 @@ def test_modify_delegation_cap(capsys: Any):
             "--delegation-cap",
             "10000000000000000000000",
             "--delegation-contract",
-            "drt1yvesqqqqqqqqqqqqqqqqqqqqqqqqyvesqqqqqqqqqqqqqthllllswa9mfp",
+            "drt1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqthllllseg5eqf",
             "--pem",
             str(alice),
             "--chain",
@@ -420,8 +420,8 @@ def test_modify_delegation_cap(capsys: Any):
     transaction = tx["emittedTransaction"]
 
     assert data == "modifyTotalDelegationCap@021e19e0c9bab2400000"
-    assert transaction["sender"] == "drt1c7pyyq2yaq5k7atn9z6qn5qkxwlc6zwc4vg7uuxn9ssy7evfh5jq4nm79l"
-    assert transaction["receiver"] == "drt1yvesqqqqqqqqqqqqqqqqqqqqqqqqyvesqqqqqqqqqqqqqthllllswa9mfp"
+    assert transaction["sender"] == "drt1qyu5wthldzr8wx5c9ucg8kjagg0jfs53s8nr3zpz3hypefsdd8ssey5egf"
+    assert transaction["receiver"] == "drt1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqthllllseg5eqf"
     assert transaction["gasLimit"] == 11117500
 
 
@@ -432,7 +432,7 @@ def test_automatic_activation(capsys: Any):
             "automatic-activation",
             "--set",
             "--delegation-contract",
-            "drt1yvesqqqqqqqqqqqqqqqqqqqqqqqqyvesqqqqqqqqqqqqqthllllswa9mfp",
+            "drt1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqthllllseg5eqf",
             "--pem",
             str(alice),
             "--nonce",
@@ -446,8 +446,8 @@ def test_automatic_activation(capsys: Any):
     transaction = tx["emittedTransaction"]
 
     assert data == "setAutomaticActivation@74727565"
-    assert transaction["sender"] == "drt1c7pyyq2yaq5k7atn9z6qn5qkxwlc6zwc4vg7uuxn9ssy7evfh5jq4nm79l"
-    assert transaction["receiver"] == "drt1yvesqqqqqqqqqqqqqqqqqqqqqqqqyvesqqqqqqqqqqqqqthllllswa9mfp"
+    assert transaction["sender"] == "drt1qyu5wthldzr8wx5c9ucg8kjagg0jfs53s8nr3zpz3hypefsdd8ssey5egf"
+    assert transaction["receiver"] == "drt1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqthllllseg5eqf"
     assert transaction["gasLimit"] == 11096500
 
     # Clear the captured content
@@ -459,7 +459,7 @@ def test_automatic_activation(capsys: Any):
             "automatic-activation",
             "--unset",
             "--delegation-contract",
-            "drt1yvesqqqqqqqqqqqqqqqqqqqqqqqqyvesqqqqqqqqqqqqqthllllswa9mfp",
+            "drt1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqthllllseg5eqf",
             "--pem",
             str(alice),
             "--nonce",
@@ -473,8 +473,8 @@ def test_automatic_activation(capsys: Any):
     transaction = tx["emittedTransaction"]
 
     assert data == "setAutomaticActivation@66616c7365"
-    assert transaction["sender"] == "drt1c7pyyq2yaq5k7atn9z6qn5qkxwlc6zwc4vg7uuxn9ssy7evfh5jq4nm79l"
-    assert transaction["receiver"] == "drt1yvesqqqqqqqqqqqqqqqqqqqqqqqqyvesqqqqqqqqqqqqqthllllswa9mfp"
+    assert transaction["sender"] == "drt1qyu5wthldzr8wx5c9ucg8kjagg0jfs53s8nr3zpz3hypefsdd8ssey5egf"
+    assert transaction["receiver"] == "drt1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqthllllseg5eqf"
     assert transaction["gasLimit"] == 11099500
 
 
@@ -485,7 +485,7 @@ def test_redelegate_cap(capsys: Any):
             "redelegate-cap",
             "--set",
             "--delegation-contract",
-            "drt1yvesqqqqqqqqqqqqqqqqqqqqqqqqyvesqqqqqqqqqqqqqthllllswa9mfp",
+            "drt1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqthllllseg5eqf",
             "--pem",
             str(alice),
             "--nonce",
@@ -499,8 +499,8 @@ def test_redelegate_cap(capsys: Any):
     transaction = tx["emittedTransaction"]
 
     assert data == "setCheckCapOnReDelegateRewards@74727565"
-    assert transaction["sender"] == "drt1c7pyyq2yaq5k7atn9z6qn5qkxwlc6zwc4vg7uuxn9ssy7evfh5jq4nm79l"
-    assert transaction["receiver"] == "drt1yvesqqqqqqqqqqqqqqqqqqqqqqqqyvesqqqqqqqqqqqqqthllllswa9mfp"
+    assert transaction["sender"] == "drt1qyu5wthldzr8wx5c9ucg8kjagg0jfs53s8nr3zpz3hypefsdd8ssey5egf"
+    assert transaction["receiver"] == "drt1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqthllllseg5eqf"
     assert transaction["gasLimit"] == 11108500
 
     # Clear the captured content
@@ -512,7 +512,7 @@ def test_redelegate_cap(capsys: Any):
             "redelegate-cap",
             "--unset",
             "--delegation-contract",
-            "drt1yvesqqqqqqqqqqqqqqqqqqqqqqqqyvesqqqqqqqqqqqqqthllllswa9mfp",
+            "drt1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqthllllseg5eqf",
             "--pem",
             str(alice),
             "--nonce",
@@ -526,8 +526,8 @@ def test_redelegate_cap(capsys: Any):
     transaction = tx["emittedTransaction"]
 
     assert data == "setCheckCapOnReDelegateRewards@66616c7365"
-    assert transaction["sender"] == "drt1c7pyyq2yaq5k7atn9z6qn5qkxwlc6zwc4vg7uuxn9ssy7evfh5jq4nm79l"
-    assert transaction["receiver"] == "drt1yvesqqqqqqqqqqqqqqqqqqqqqqqqyvesqqqqqqqqqqqqqthllllswa9mfp"
+    assert transaction["sender"] == "drt1qyu5wthldzr8wx5c9ucg8kjagg0jfs53s8nr3zpz3hypefsdd8ssey5egf"
+    assert transaction["receiver"] == "drt1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqthllllseg5eqf"
     assert transaction["gasLimit"] == 11111500
 
 
@@ -543,7 +543,7 @@ def test_set_metadata(capsys: Any):
             "--identifier",
             "TEST",
             "--delegation-contract",
-            "drt1yvesqqqqqqqqqqqqqqqqqqqqqqqqyvesqqqqqqqqqqqqqthllllswa9mfp",
+            "drt1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqthllllseg5eqf",
             "--pem",
             str(alice),
             "--nonce",
@@ -557,8 +557,8 @@ def test_set_metadata(capsys: Any):
     transaction = tx["emittedTransaction"]
 
     assert data == "setMetaData@54657374@7777772e746573742e636f6d@54455354"
-    assert transaction["sender"] == "drt1c7pyyq2yaq5k7atn9z6qn5qkxwlc6zwc4vg7uuxn9ssy7evfh5jq4nm79l"
-    assert transaction["receiver"] == "drt1yvesqqqqqqqqqqqqqqqqqqqqqqqqyvesqqqqqqqqqqqqqthllllswa9mfp"
+    assert transaction["sender"] == "drt1qyu5wthldzr8wx5c9ucg8kjagg0jfs53s8nr3zpz3hypefsdd8ssey5egf"
+    assert transaction["receiver"] == "drt1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqthllllseg5eqf"
     assert transaction["gasLimit"] == 11131000
 
 
@@ -584,8 +584,8 @@ def test_create_delegation_contract_from_validator(capsys: Any):
     transaction = tx["emittedTransaction"]
 
     assert data == "makeNewContractFromValidatorData@@0ea1"
-    assert transaction["sender"] == "drt1c7pyyq2yaq5k7atn9z6qn5qkxwlc6zwc4vg7uuxn9ssy7evfh5jq4nm79l"
-    assert transaction["receiver"] == "drt1yvesqqqqqqqqqqqqqqqqqqqqqqqqyvesqqqqqqqqqqqqqqqyllls4jxmwv"
+    assert transaction["sender"] == "drt1qyu5wthldzr8wx5c9ucg8kjagg0jfs53s8nr3zpz3hypefsdd8ssey5egf"
+    assert transaction["receiver"] == "drt1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqylllsz8he8y"
     assert transaction["gasLimit"] == 510000000
 
 
@@ -595,7 +595,7 @@ def test_delegate(capsys: Any):
             "staking-provider",
             "delegate",
             "--delegation-contract",
-            "drt1yvesqqqqqqqqqqqqqqqqqqqqqqqqyvesqqqqqqqqqqqqqthllllswa9mfp",
+            "drt1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqthllllseg5eqf",
             "--value",
             "1000000000000000000",
             "--pem",
@@ -611,9 +611,9 @@ def test_delegate(capsys: Any):
     transaction = tx["emittedTransaction"]
 
     assert data == "delegate"
-    assert transaction["sender"] == "drt1c7pyyq2yaq5k7atn9z6qn5qkxwlc6zwc4vg7uuxn9ssy7evfh5jq4nm79l"
-    assert transaction["receiver"] == "drt1yvesqqqqqqqqqqqqqqqqqqqqqqqqyvesqqqqqqqqqqqqqthllllswa9mfp"
-    assert transaction["gasLimit"] == 12000000
+    assert transaction["sender"] == "drt1qyu5wthldzr8wx5c9ucg8kjagg0jfs53s8nr3zpz3hypefsdd8ssey5egf"
+    assert transaction["receiver"] == "drt1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqthllllseg5eqf"
+    assert transaction["gasLimit"] == 11062000
 
 
 def test_claim_rewards(capsys: Any):
@@ -622,7 +622,7 @@ def test_claim_rewards(capsys: Any):
             "staking-provider",
             "claim-rewards",
             "--delegation-contract",
-            "drt1yvesqqqqqqqqqqqqqqqqqqqqqqqqyvesqqqqqqqqqqqqqthllllswa9mfp",
+            "drt1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqthllllseg5eqf",
             "--pem",
             str(alice),
             "--nonce",
@@ -636,9 +636,9 @@ def test_claim_rewards(capsys: Any):
     transaction = tx["emittedTransaction"]
 
     assert data == "claimRewards"
-    assert transaction["sender"] == "drt1c7pyyq2yaq5k7atn9z6qn5qkxwlc6zwc4vg7uuxn9ssy7evfh5jq4nm79l"
-    assert transaction["receiver"] == "drt1yvesqqqqqqqqqqqqqqqqqqqqqqqqyvesqqqqqqqqqqqqqthllllswa9mfp"
-    assert transaction["gasLimit"] == 6000000
+    assert transaction["sender"] == "drt1qyu5wthldzr8wx5c9ucg8kjagg0jfs53s8nr3zpz3hypefsdd8ssey5egf"
+    assert transaction["receiver"] == "drt1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqthllllseg5eqf"
+    assert transaction["gasLimit"] == 11068000
 
 
 def test_redelegate_rewards(capsys: Any):
@@ -647,7 +647,7 @@ def test_redelegate_rewards(capsys: Any):
             "staking-provider",
             "redelegate-rewards",
             "--delegation-contract",
-            "drt1yvesqqqqqqqqqqqqqqqqqqqqqqqqyvesqqqqqqqqqqqqqthllllswa9mfp",
+            "drt1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqthllllseg5eqf",
             "--pem",
             str(alice),
             "--nonce",
@@ -661,9 +661,9 @@ def test_redelegate_rewards(capsys: Any):
     transaction = tx["emittedTransaction"]
 
     assert data == "reDelegateRewards"
-    assert transaction["sender"] == "drt1c7pyyq2yaq5k7atn9z6qn5qkxwlc6zwc4vg7uuxn9ssy7evfh5jq4nm79l"
-    assert transaction["receiver"] == "drt1yvesqqqqqqqqqqqqqqqqqqqqqqqqyvesqqqqqqqqqqqqqthllllswa9mfp"
-    assert transaction["gasLimit"] == 12000000
+    assert transaction["sender"] == "drt1qyu5wthldzr8wx5c9ucg8kjagg0jfs53s8nr3zpz3hypefsdd8ssey5egf"
+    assert transaction["receiver"] == "drt1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqthllllseg5eqf"
+    assert transaction["gasLimit"] == 11075500
 
 
 def test_undelegate(capsys: Any):
@@ -672,7 +672,7 @@ def test_undelegate(capsys: Any):
             "staking-provider",
             "undelegate",
             "--delegation-contract",
-            "drt1yvesqqqqqqqqqqqqqqqqqqqqqqqqyvesqqqqqqqqqqqqqthllllswa9mfp",
+            "drt1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqthllllseg5eqf",
             "--value",
             "1000000000000000000",
             "--pem",
@@ -688,9 +688,9 @@ def test_undelegate(capsys: Any):
     transaction = tx["emittedTransaction"]
 
     assert data == "unDelegate@0de0b6b3a7640000"
-    assert transaction["sender"] == "drt1c7pyyq2yaq5k7atn9z6qn5qkxwlc6zwc4vg7uuxn9ssy7evfh5jq4nm79l"
-    assert transaction["receiver"] == "drt1yvesqqqqqqqqqqqqqqqqqqqqqqqqyvesqqqqqqqqqqqqqthllllswa9mfp"
-    assert transaction["gasLimit"] == 12000000
+    assert transaction["sender"] == "drt1qyu5wthldzr8wx5c9ucg8kjagg0jfs53s8nr3zpz3hypefsdd8ssey5egf"
+    assert transaction["receiver"] == "drt1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqthllllseg5eqf"
+    assert transaction["gasLimit"] == 11090500
 
 
 def test_withdraw(capsys: Any):
@@ -699,7 +699,7 @@ def test_withdraw(capsys: Any):
             "staking-provider",
             "withdraw",
             "--delegation-contract",
-            "drt1yvesqqqqqqqqqqqqqqqqqqqqqqqqyvesqqqqqqqqqqqqqthllllswa9mfp",
+            "drt1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqthllllseg5eqf",
             "--pem",
             str(alice),
             "--nonce",
@@ -713,9 +713,9 @@ def test_withdraw(capsys: Any):
     transaction = tx["emittedTransaction"]
 
     assert data == "withdraw"
-    assert transaction["sender"] == "drt1c7pyyq2yaq5k7atn9z6qn5qkxwlc6zwc4vg7uuxn9ssy7evfh5jq4nm79l"
-    assert transaction["receiver"] == "drt1yvesqqqqqqqqqqqqqqqqqqqqqqqqyvesqqqqqqqqqqqqqthllllswa9mfp"
-    assert transaction["gasLimit"] == 12000000
+    assert transaction["sender"] == "drt1qyu5wthldzr8wx5c9ucg8kjagg0jfs53s8nr3zpz3hypefsdd8ssey5egf"
+    assert transaction["receiver"] == "drt1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqthllllseg5eqf"
+    assert transaction["gasLimit"] == 11062000
 
 
 def _read_stdout(capsys: Any) -> str:

@@ -42,7 +42,7 @@ testRunScenarios() {
 
 testWasmName() {
     echo "testWasmName"
-   
+
     ${CLI} contract clean --path ${SANDBOX}/adder
     assertFileDoesNotExist ${SANDBOX}/adder/output/adder-2.wasm || return 1
     ${CLI} contract build --path=${SANDBOX}/adder --target-dir=${TARGET_DIR} --wasm-name adder-2 || return 1
@@ -82,7 +82,7 @@ testVerifyContract(){
 
     command_response=$(${CLI} contract verify drt1qqqqqqqqqqqqqpgquzmh78klkqwt0p4rjys0qtp3la07gz4d396qwgcss9 \
                         --verifier-url=http://localhost:7777 --packaged-src=testdata/dummy.json \
-                        --pem=testdata/walletKey.pem --docker-image=dharitri/sdk-rust-contract-builder:v4.0.0)
+                        --pem=testdata/walletKey.pem --docker-image=terradharitri/sdk-rust-contract-builder:v4.0.0)
 
     result_curl=$(echo $query_response | awk -F ": " '{ print $2 }' | awk -F'"' '{print $2}')
     result_cli=$(echo $command_response | awk -F ": " '{ print $2 }' | awk -F'"' '{print $2}')
@@ -102,7 +102,7 @@ testReproducibleBuild() {
 
     wget -O ${SANDBOX}/example.zip https://github.com/TerraDharitri/drt-reproducible-contract-build-example-sc/archive/refs/tags/v0.2.1.zip || return 1
     unzip ${SANDBOX}/example.zip -d ${SANDBOX} || return 1
-    ${CLI} contract reproducible-build ${SANDBOX}/drt-reproducible-contract-build-example-sc-0.2.1 --docker-image=dharitri/sdk-rust-contract-builder:v4.1.2 --no-docker-interactive --no-docker-tty || return 1
+    ${CLI} contract reproducible-build ${SANDBOX}/drt-reproducible-contract-build-example-sc-0.2.1 --docker-image=terradharitri/sdk-rust-contract-builder:v4.1.2 --no-docker-interactive --no-docker-tty || return 1
     assertFileExists ${SANDBOX}/drt-reproducible-contract-build-example-sc-0.2.1/output-docker/artifacts.json || return 1
 }
 

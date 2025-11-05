@@ -20,23 +20,23 @@ general = General(
 software = Software(
     drt_go_chain=SoftwareChainGo(
         resolution=SoftwareResolution.Remote,
-        archive_url="https://github.com/TerraDharitri/drt-go-chain/archive/refs/heads/main.zip",
-        archive_download_folder=Path("~/dharitri-sdk") / "localnet_software_remote" / "downloaded" / "drt-go-chain",
-        archive_extraction_folder=Path("~/dharitri-sdk") / "localnet_software_remote" / "extracted" / "drt-go-chain",
-        local_path=Path("~/dharitri-sdk") / "localnet_software_local" / "drt-go-chain",
+        archive_url="https://github.com/TerraDharitri/drt-go-chain/archive/refs/heads/master.zip",
+        archive_download_folder=Path("~/dharitri-py-sdk") / "localnet_software_remote" / "downloaded" / "drt-go-chain",
+        archive_extraction_folder=Path("~/dharitri-py-sdk") / "localnet_software_remote" / "extracted" / "drt-go-chain",
+        local_path=Path("~/dharitri-py-sdk") / "localnet_software_local" / "drt-go-chain",
     ),
     drt_go_chain_proxy=SoftwareChainProxyGo(
         resolution=SoftwareResolution.Remote,
-        archive_url="https://github.com/TerraDharitri/drt-go-chain-proxy/archive/refs/heads/main.zip",
-        archive_download_folder=Path("~/Desktop/teja-work/my_python_works/temp/dharitri-sdk")
+        archive_url="https://github.com/TerraDharitri/drt-go-chain-proxy/archive/refs/heads/master.zip",
+        archive_download_folder=Path("~/dharitri-py-sdk")
         / "localnet_software_remote"
         / "downloaded"
-        / "drt-go-chain",
-        archive_extraction_folder=Path("~/Desktop/teja-work/my_python_works/temp/dharitri-sdk")
+        / "drt-go-chain-proxy",
+        archive_extraction_folder=Path("~/dharitri-py-sdk")
         / "localnet_software_remote"
         / "extracted"
-        / "drt-go-chain",
-        local_path=Path("~/Desktop/teja-work/my_python_works/temp/dharitri-sdk") / "localnet_software_local" / "drt-go-chain-proxy",
+        / "drt-go-chain-proxy",
+        local_path=Path("~/dharitri-py-sdk") / "localnet_software_local" / "drt-go-chain-proxy",
     ),
 )
 

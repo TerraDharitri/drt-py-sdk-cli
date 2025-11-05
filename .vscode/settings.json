@@ -1,5 +1,7 @@
 {
-  "python.testing.pytestArgs": ["dharitri_sdk_cli"],
+  "python.testing.pytestArgs": [
+    "dharitri_sdk_cli"
+  ],
   "python.testing.pytestEnabled": true,
   "editor.formatOnSave": true,
   "[python]": {
@@ -16,5 +18,7 @@
   "github.gitProtocol": "ssh",
   "python.analysis.autoFormatStrings": true,
   "python.analysis.completeFunctionParens": true,
-  "black-formatter.args": ["--line-length=120"]
+  "black-formatter.args": [
+    "--line-length=120"
+  ]
 }
