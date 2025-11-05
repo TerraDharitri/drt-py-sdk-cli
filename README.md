@@ -1,5 +1,5 @@
 # Description
-Python Command Line Tools for interacting with Dharitri<sup>X</sup>.
+Python Command Line Tools for interacting with Multivers<sup>X</sup>.
 
 ## Documentation
 [docs.dharitri.org](https://docs.dharitri.org/sdk-and-tools/sdk-py/)
