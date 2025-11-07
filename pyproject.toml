@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "drtpy"
-version = "0.0.3"
+version = "0.0.4"
 authors = [
   { name="DharitrI" },
 ]
@@ -25,7 +25,7 @@ dependencies = [
   "ledgercomm[hid]",
   "rich==13.3.4",
   "argcomplete==3.2.2",
-  "dharitri-py-sdk[ledger]==0.0.5"
+  "dharitri-py-sdk[ledger]==0.0.6"
 ]
 
 [project.scripts]

@@ -6,6 +6,8 @@ from dharitri_sdk_cli.cli import main
 
 parent = Path(__file__).parent
 alice = parent / "testdata" / "alice.pem"
+guardian = parent / "testdata" / "testUser.pem"
+relayer = parent / "testdata" / "testUser2.pem"
 
 first_bls_key = "f8910e47cf9464777c912e6390758bb39715fffcb861b184017920e4a807b42553f2f21e7f3914b81bcf58b66a72ab16d97013ae1cff807cefc977ef8cbf116258534b9e46d19528042d16ef8374404a89b184e0a4ee18c77c49e454d04eae8d"
 second_bls_key = "1b4e60e6d100cdf234d3427494dac55fbac49856cadc86bcb13a01b9bb05a0d9143e86c186c948e7ae9e52427c9523102efe9019a2a9c06db02993f2e3e6756576ae5a3ec7c235d548bc79de1a6990e1120ae435cb48f7fc436c9f9098b92a0d"
@@ -41,9 +43,181 @@ def test_create_new_delegation_contract(capsys: Any):
     assert transaction["chainID"] == "T"
     assert transaction["gasLimit"] == 60126500
     assert transaction["value"] == "1250000000000000000000"
+    assert transaction["options"] == 0
+    assert transaction["version"] == 2
     assert (
         transaction["signature"]
         == "2724ef55b19cd8af895fbb3702d86eedc63c175c4765c1b826480dca6e65f97380d9c89a2ab7dfec52a66a24f43acb2b79460fbfeef0e4fd45351335b8412403"
+    )
+
+
+def test_create_new_delegation_contract_sign_by_hash(capsys: Any):
+    main(
+        [
+            "staking-provider",
+            "create-new-delegation-contract",
+            "--pem",
+            str(alice),
+            "--nonce",
+            "7",
+            "--value",
+            "1250000000000000000000",
+            "--total-delegation-cap",
+            "10000000000000000000000",
+            "--service-fee",
+            "100",
+            "--chain",
+            "T",
+            "--options",
+            "1",
+        ]
+    )
+    tx = get_transaction(capsys)
+    data = tx["emittedTransactionData"]
+    transaction = tx["emittedTransaction"]
+
+    assert data == "createNewDelegationContract@021e19e0c9bab2400000@64"
+    assert transaction["sender"] == "drt1qyu5wthldzr8wx5c9ucg8kjagg0jfs53s8nr3zpz3hypefsdd8ssey5egf"
+    assert transaction["receiver"] == "drt1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqylllsz8he8y"
+    assert transaction["chainID"] == "T"
+    assert transaction["gasLimit"] == 60126500
+    assert transaction["value"] == "1250000000000000000000"
+    assert transaction["options"] == 1
+    assert transaction["version"] == 2
+    assert (
+        transaction["signature"]
+        == "d3a4d636bbe6d2e4d97af06af0b4b3093f8f22326cc5dada81996b0e51aca5c17da17f7489bbd0708e6187c7aa17d74421e755fdf6d3fd5c5691050531297006"
+    )
+
+
+def test_create_new_delegation_contract_with_guardian_and_relayer(capsys: Any):
+    main(
+        [
+            "staking-provider",
+            "create-new-delegation-contract",
+            "--pem",
+            str(alice),
+            "--nonce",
+            "7",
+            "--value",
+            "1250000000000000000000",
+            "--total-delegation-cap",
+            "10000000000000000000000",
+            "--service-fee",
+            "100",
+            "--chain",
+            "T",
+            "--guardian-pem",
+            str(guardian),
+            "--relayer-pem",
+            str(relayer),
+        ]
+    )
+    tx = get_transaction(capsys)
+    data = tx["emittedTransactionData"]
+    transaction = tx["emittedTransaction"]
+
+    assert data == "createNewDelegationContract@021e19e0c9bab2400000@64"
+    assert transaction["sender"] == "drt1qyu5wthldzr8wx5c9ucg8kjagg0jfs53s8nr3zpz3hypefsdd8ssey5egf"
+    assert transaction["receiver"] == "drt1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqylllsz8he8y"
+    assert transaction["chainID"] == "T"
+    assert transaction["gasLimit"] == 60226500
+    assert transaction["value"] == "1250000000000000000000"
+    assert transaction["options"] == 2
+    assert transaction["version"] == 2
+    assert transaction["guardian"] == "drt1cqqxak4wun7508e0yj9ng843r6hv4mzd0hhpjpsejkpn9wa9yq8s0ztfl2"
+    assert transaction["relayer"] == "drt1ssmsc9022udc8pdw7wk3hxw74jr900xg28vwpz3z60gep66fasaszky4ct"
+    assert (
+        transaction["signature"]
+        == "923790cfb4e01a4c7620e3bb73410a476e41f612eb55cdab74e1c4384ee6e6568d5ebedc99d42d43c13d551efd74f1ffd504260926ca6d684218be1f66359e0a"
+    )
+
+
+def test_create_new_delegation_contract_with_guardian_and_relayer_and_provided_version_and_options(capsys: Any):
+    main(
+        [
+            "staking-provider",
+            "create-new-delegation-contract",
+            "--pem",
+            str(alice),
+            "--nonce",
+            "7",
+            "--value",
+            "1250000000000000000000",
+            "--total-delegation-cap",
+            "10000000000000000000000",
+            "--service-fee",
+            "100",
+            "--chain",
+            "T",
+            "--guardian-pem",
+            str(guardian),
+            "--relayer-pem",
+            str(relayer),
+            "--version",
+            "7",
+            "--options",
+            "77",
+        ]
+    )
+    tx = get_transaction(capsys)
+    data = tx["emittedTransactionData"]
+    transaction = tx["emittedTransaction"]
+
+    assert data == "createNewDelegationContract@021e19e0c9bab2400000@64"
+    assert transaction["sender"] == "drt1qyu5wthldzr8wx5c9ucg8kjagg0jfs53s8nr3zpz3hypefsdd8ssey5egf"
+    assert transaction["receiver"] == "drt1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqylllsz8he8y"
+    assert transaction["chainID"] == "T"
+    assert transaction["gasLimit"] == 60226500
+    assert transaction["value"] == "1250000000000000000000"
+    assert transaction["options"] == 77
+    assert transaction["version"] == 7
+    assert transaction["guardian"] == "drt1cqqxak4wun7508e0yj9ng843r6hv4mzd0hhpjpsejkpn9wa9yq8s0ztfl2"
+    assert transaction["relayer"] == "drt1ssmsc9022udc8pdw7wk3hxw74jr900xg28vwpz3z60gep66fasaszky4ct"
+
+
+def test_create_new_delegation_contract_with_guardian_and_relayer_and_sign_by_hash(capsys: Any):
+    main(
+        [
+            "staking-provider",
+            "create-new-delegation-contract",
+            "--pem",
+            str(alice),
+            "--nonce",
+            "7",
+            "--value",
+            "1250000000000000000000",
+            "--total-delegation-cap",
+            "10000000000000000000000",
+            "--service-fee",
+            "100",
+            "--chain",
+            "T",
+            "--guardian-pem",
+            str(guardian),
+            "--relayer-pem",
+            str(relayer),
+            "--options",
+            "1",
+        ]
+    )
+    tx = get_transaction(capsys)
+    data = tx["emittedTransactionData"]
+    transaction = tx["emittedTransaction"]
+
+    assert data == "createNewDelegationContract@021e19e0c9bab2400000@64"
+    assert transaction["sender"] == "drt1qyu5wthldzr8wx5c9ucg8kjagg0jfs53s8nr3zpz3hypefsdd8ssey5egf"
+    assert transaction["receiver"] == "drt1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqylllsz8he8y"
+    assert transaction["chainID"] == "T"
+    assert transaction["gasLimit"] == 60226500
+    assert transaction["value"] == "1250000000000000000000"
+    assert transaction["options"] == 1
+    assert transaction["version"] == 2
+    assert transaction["guardian"] == "drt1cqqxak4wun7508e0yj9ng843r6hv4mzd0hhpjpsejkpn9wa9yq8s0ztfl2"
+    assert transaction["relayer"] == "drt1ssmsc9022udc8pdw7wk3hxw74jr900xg28vwpz3z60gep66fasaszky4ct"
+    assert (
+        transaction["signature"]
+        == "ce0c0a6a70e8dc8e2dfe46b4aac81a466c71be28be4d067f3cd8140b9866ecfc340766cd981450eab4615df66fe6b93008a1b96670fdbc2253843645018ecb01"
     )
 
 
@@ -586,7 +760,7 @@ def test_create_delegation_contract_from_validator(capsys: Any):
     assert data == "makeNewContractFromValidatorData@@0ea1"
     assert transaction["sender"] == "drt1qyu5wthldzr8wx5c9ucg8kjagg0jfs53s8nr3zpz3hypefsdd8ssey5egf"
     assert transaction["receiver"] == "drt1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqylllsz8he8y"
-    assert transaction["gasLimit"] == 510000000
+    assert transaction["gasLimit"] == 51107000
 
 
 def test_delegate(capsys: Any):

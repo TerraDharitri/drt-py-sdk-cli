@@ -1,3 +1,6 @@
+from dharitri_py_sdk import Address
+
+from dharitri_sdk_cli.args_converter import convert_args_to_typed_values
 from dharitri_sdk_cli.cli_shared import prepare_token_transfers
 
 
@@ -31,3 +34,25 @@ def test_prepare_token_tranfers():
     assert transfers[3].token.identifier == "META-777777"
     assert transfers[3].token.nonce == 16
     assert transfers[3].amount == 123456789
+
+
+def test_prepare_args_for_factories():
+    args = [
+        "0x5",
+        "123",
+        "false",
+        "true",
+        "str:test-string",
+        "drt1qyu5wthldzr8wx5c9ucg8kjagg0jfs53s8nr3zpz3hypefsdd8ssey5egf",
+    ]
+
+    arguments = convert_args_to_typed_values(args)
+    assert arguments[0].get_payload() == b"\x05"
+    assert arguments[1].get_payload() == 123
+    assert arguments[2].get_payload() is False
+    assert arguments[3].get_payload() is True
+    assert arguments[4].get_payload() == "test-string"
+    assert (
+        arguments[5].get_payload()
+        == Address.new_from_bech32("drt1qyu5wthldzr8wx5c9ucg8kjagg0jfs53s8nr3zpz3hypefsdd8ssey5egf").get_public_key()
+    )

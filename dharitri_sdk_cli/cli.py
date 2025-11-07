@@ -23,6 +23,7 @@ import dharitri_sdk_cli.cli_governance
 import dharitri_sdk_cli.cli_ledger
 import dharitri_sdk_cli.cli_localnet
 import dharitri_sdk_cli.cli_multisig
+import dharitri_sdk_cli.cli_tokens
 import dharitri_sdk_cli.cli_transactions
 import dharitri_sdk_cli.cli_validator_wallet
 import dharitri_sdk_cli.cli_validators
@@ -142,6 +143,7 @@ See:
     commands.append(dharitri_sdk_cli.cli_governance.setup_parser(args, subparsers))
     commands.append(dharitri_sdk_cli.cli_config_env.setup_parser(subparsers))
     commands.append(dharitri_sdk_cli.cli_get.setup_parser(subparsers))
+    commands.append(dharitri_sdk_cli.cli_tokens.setup_parser(args, subparsers))
 
     parser.epilog = """
 ----------------------
