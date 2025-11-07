@@ -36,7 +36,7 @@ def test_create_tx_and_sign_by_hash(capsys: Any):
     signature = tx_json["emittedTransaction"]["signature"]
     assert (
         signature
-        == "45307099ecebc140bdc5f71f088dfe59dd324839061a36d1c22093a2144f77ba2914f6470da6e92a97e43d7a0a9ebeb7f0f5371ad62428718c5163a513567c0e"
+        == "97500cef697c580695ddd2f589458bf1041da3a5a8e9217d497a84ede171d99236c71cdabb4b2abc82322d94a757338ca320a3016c7bb443ac6284cc4af9390f"
     )
 
 
@@ -71,7 +71,7 @@ def test_create_move_balance_transaction(capsys: Any):
     signature = tx_json["emittedTransaction"]["signature"]
     assert (
         signature
-        == "5c90025e3361cbe0a28eddbe89d52c3c63d66b1ea22e3bc628d60b352539723b22a8fa3b6f5df6f4f79012f8a7497cb255af3b1e1fa86c1f09d262fc8810b608"
+        == "7f055de622b1f150163f5e015071a4fd510b510112ada12e604ac56f1af6694e0d8c418be6b4dc8c5cfc8f90f81abc40a89ce51f2c33993efb112d19eee09d0c"
     )
 
 
@@ -107,7 +107,7 @@ def test_create_multi_transfer_transaction(capsys: Any):
     signature = tx_json["emittedTransaction"]["signature"]
     assert (
         signature
-        == "1619eba8bcabfdb08ef9170464d5424819e79b4821057d11120ab6577c7327c88263853bdf55cec3acf2d75a1c91cd9d3d694162503a8586e52e6b6da4011207"
+        == "8e3c0bb52201332c76f75523fc0b8157c823d0fa09f0fcce0355457add9d19334566fb39f50ac8c2201bb82281a9e6d4a2bc9992ae6b46c4fa72d6b7d8b2f30f"
     )
 
 
@@ -159,15 +159,15 @@ def test_relayed_v3_without_relayer_wallet(capsys: Any):
             "--chain",
             "T",
             "--relayer",
-            "drt1kp072dwz0arfz8m5lzmlypgu2nme9l9q33aty0znualvanfvmy5qd3yy8q",
+            "drt1cqqxak4wun7508e0yj9ng843r6hv4mzd0hhpjpsejkpn9wa9yq8s0ztfl2",
         ]
     )
     assert return_code == 0
     tx = _read_stdout(capsys)
     tx_json = json.loads(tx)["emittedTransaction"]
-    assert tx_json["sender"] == "drt1c7pyyq2yaq5k7atn9z6qn5qkxwlc6zwc4vg7uuxn9ssy7evfh5jq4nm79l"
+    assert tx_json["sender"] == "drt1qyu5wthldzr8wx5c9ucg8kjagg0jfs53s8nr3zpz3hypefsdd8ssey5egf"
     assert tx_json["receiver"] == "drt1spyavw0956vq68xj8y4tenjpq2wd5a9p2c6j8gsz7ztyrnpxrruqlqde3c"
-    assert tx_json["relayer"] == "drt1kp072dwz0arfz8m5lzmlypgu2nme9l9q33aty0znualvanfvmy5qd3yy8q"
+    assert tx_json["relayer"] == "drt1cqqxak4wun7508e0yj9ng843r6hv4mzd0hhpjpsejkpn9wa9yq8s0ztfl2"
     assert tx_json["signature"]
     assert not tx_json["relayerSignature"]
 
@@ -190,7 +190,7 @@ def test_relayed_v3_incorrect_relayer():
             "--chain",
             "T",
             "--relayer",
-            "drt1kp072dwz0arfz8m5lzmlypgu2nme9l9q33aty0znualvanfvmy5qd3yy8q",
+            "drt1cqqxak4wun7508e0yj9ng843r6hv4mzd0hhpjpsejkpn9wa9yq8s0ztfl2",
             "--relayer-pem",
             str(testdata_path / "alice.pem"),
         ]
@@ -219,7 +219,7 @@ def test_create_relayed_v3_transaction(capsys: Any):
             "--chain",
             "T",
             "--relayer",
-            "drt1kp072dwz0arfz8m5lzmlypgu2nme9l9q33aty0znualvanfvmy5qd3yy8q",
+            "drt1cqqxak4wun7508e0yj9ng843r6hv4mzd0hhpjpsejkpn9wa9yq8s0ztfl2",
             "--relayer-pem",
             str(testdata_path / "testUser.pem"),
         ]
@@ -228,9 +228,9 @@ def test_create_relayed_v3_transaction(capsys: Any):
 
     tx = _read_stdout(capsys)
     tx_json = json.loads(tx)["emittedTransaction"]
-    assert tx_json["sender"] == "drt1c7pyyq2yaq5k7atn9z6qn5qkxwlc6zwc4vg7uuxn9ssy7evfh5jq4nm79l"
+    assert tx_json["sender"] == "drt1qyu5wthldzr8wx5c9ucg8kjagg0jfs53s8nr3zpz3hypefsdd8ssey5egf"
     assert tx_json["receiver"] == "drt1spyavw0956vq68xj8y4tenjpq2wd5a9p2c6j8gsz7ztyrnpxrruqlqde3c"
-    assert tx_json["relayer"] == "drt1kp072dwz0arfz8m5lzmlypgu2nme9l9q33aty0znualvanfvmy5qd3yy8q"
+    assert tx_json["relayer"] == "drt1cqqxak4wun7508e0yj9ng843r6hv4mzd0hhpjpsejkpn9wa9yq8s0ztfl2"
     assert tx_json["signature"]
     assert tx_json["relayerSignature"]
 
@@ -258,7 +258,7 @@ def test_create_relayed_v3_transaction(capsys: Any):
             "--chain",
             "T",
             "--relayer",
-            "drt1kp072dwz0arfz8m5lzmlypgu2nme9l9q33aty0znualvanfvmy5qd3yy8q",
+            "drt1cqqxak4wun7508e0yj9ng843r6hv4mzd0hhpjpsejkpn9wa9yq8s0ztfl2",
             "--outfile",
             str(testdata_out / "relayed.json"),
         ]
@@ -316,7 +316,7 @@ def test_create_plain_transaction(capsys: Any):
     tx = _read_stdout(capsys)
     tx_json = json.loads(tx)["emittedTransaction"]
 
-    assert tx_json["sender"] == "drt1c7pyyq2yaq5k7atn9z6qn5qkxwlc6zwc4vg7uuxn9ssy7evfh5jq4nm79l"
+    assert tx_json["sender"] == "drt1qyu5wthldzr8wx5c9ucg8kjagg0jfs53s8nr3zpz3hypefsdd8ssey5egf"
     assert tx_json["receiver"] == "drt1spyavw0956vq68xj8y4tenjpq2wd5a9p2c6j8gsz7ztyrnpxrruqlqde3c"
     assert tx_json["chainID"] == "test"
     assert tx_json["gasLimit"] == 50000
@@ -324,7 +324,7 @@ def test_create_plain_transaction(capsys: Any):
     assert tx_json["options"] == 0
     assert (
         tx_json["signature"]
-        == "7064ec73db20fbe13b237815c73387f8beeee2ebb2068a47bce8da2ce2d00c86782af9c54ad0fe2440eefe32b3e424c691b8915779b075af7cd6f48af3dde80c"
+        == "ad0d823f4b85f113a2ac43e0949c6b476035cfad9aae67cb6877628ecea159623a52af5b86a8c41cf8f7d50d8c9e95677221489e5f2ebe03564d76c0469ab507"
     )
 
 
@@ -346,9 +346,9 @@ def test_sign_transaction(capsys: Any):
             "--outfile",
             str(testdata_out / "transaction.json"),
             "--guardian",
-            "drt1kp072dwz0arfz8m5lzmlypgu2nme9l9q33aty0znualvanfvmy5qd3yy8q",
+            "drt1cqqxak4wun7508e0yj9ng843r6hv4mzd0hhpjpsejkpn9wa9yq8s0ztfl2",
             "--relayer",
-            "drt1nrdn6f9e43a57dj0f2ra33r4e8wt5ueemdlu8hzpnkg7zqq4shlsq0cq3k",
+            "drt1ssmsc9022udc8pdw7wk3hxw74jr900xg28vwpz3z60gep66fasaszky4ct",
         ]
     )
     assert return_code == 0
@@ -371,26 +371,96 @@ def test_sign_transaction(capsys: Any):
     tx = _read_stdout(capsys)
     tx_json = json.loads(tx)["emittedTransaction"]
 
-    assert tx_json["sender"] == "drt1c7pyyq2yaq5k7atn9z6qn5qkxwlc6zwc4vg7uuxn9ssy7evfh5jq4nm79l"
+    assert tx_json["sender"] == "drt1qyu5wthldzr8wx5c9ucg8kjagg0jfs53s8nr3zpz3hypefsdd8ssey5egf"
     assert tx_json["receiver"] == "drt1spyavw0956vq68xj8y4tenjpq2wd5a9p2c6j8gsz7ztyrnpxrruqlqde3c"
     assert tx_json["chainID"] == "test"
     assert tx_json["gasLimit"] == 50000
     assert tx_json["version"] == 2
     assert tx_json["options"] == 2
-    assert tx_json["guardian"] == "drt1kp072dwz0arfz8m5lzmlypgu2nme9l9q33aty0znualvanfvmy5qd3yy8q"
-    assert tx_json["relayer"] == "drt1nrdn6f9e43a57dj0f2ra33r4e8wt5ueemdlu8hzpnkg7zqq4shlsq0cq3k"
+    assert tx_json["guardian"] == "drt1cqqxak4wun7508e0yj9ng843r6hv4mzd0hhpjpsejkpn9wa9yq8s0ztfl2"
+    assert tx_json["relayer"] == "drt1ssmsc9022udc8pdw7wk3hxw74jr900xg28vwpz3z60gep66fasaszky4ct"
     assert (
         tx_json["signature"]
-        == "ca295e624caa593d00ba17ede487bdb7241112ea6ad4126519125979af373b66aab1d6f0ff68cc5d4a65059dc0c7f7fd37118ea904356b601fed02b22927530c"
+        == "bd92c7ce737871d5bc413d9e358a4075921efef545b50aac8cd083ac1970b66bd3b25fe25fadf3535faeeb76bd047600e66b0cdb3b44cb6860197b641ed9ff08"
     )
     assert (
         tx_json["guardianSignature"]
-        == "8133286c1e56205f99209665fbca9c34d6541c43c86831ac4e9afe385e8286814ce2ef79bcc9503d52ac68ac0c8dbcfcba06e3d6d8f226c7780b554fb457010c"
+        == "146fdb95b0d11d5f4eaa269c76182b69128cbd8de022a62f7415ec29f08a5a7648ce0e9e8094f35c1a16970916dc6bb6c2d1d379e49b7443564b1360bb0b9e02"
     )
     assert (
         tx_json["relayerSignature"]
-        == "8bdf45edd1409c455ec0ba7d566581eadac4ad3b4f63134d5f118acb9c37e16a4f92f1694b1255cc07762c1ed8f3a9cbfb00f1679f601ab58c96ee8e49b61909"
+        == "e3d1e4ef55e946d656706f9e3619e4f48ebe5dd3904ec9295ae3bed002155401f8466690c6f72de8f1f4f7dfdd197b03a05fc8a5f163c6f8168d9a05f7e05c03"
     )
+
+
+def test_estimate_gas(capsys: Any):
+    return_code = main(
+        [
+            "tx",
+            "new",
+            "--pem",
+            str(testdata_path / "alice.pem"),
+            "--receiver",
+            "drt1spyavw0956vq68xj8y4tenjpq2wd5a9p2c6j8gsz7ztyrnpxrruqlqde3c",
+            "--proxy",
+            "https://devnet-gateway.dharitri.org",
+            "--value",
+            "1000000000000",
+        ]
+    )
+    assert return_code == 0
+
+    tx = _read_stdout(capsys)
+    tx_json = json.loads(tx)["emittedTransaction"]
+    assert tx_json["gasLimit"] == 50000
+
+
+def test_estimate_gas_for_guarded_tx(capsys: Any):
+    return_code = main(
+        [
+            "tx",
+            "new",
+            "--pem",
+            str(testdata_path / "alice.pem"),
+            "--receiver",
+            "drt1spyavw0956vq68xj8y4tenjpq2wd5a9p2c6j8gsz7ztyrnpxrruqlqde3c",
+            "--proxy",
+            "https://devnet-gateway.dharitri.org",
+            "--value",
+            "1000000000000",
+            "--guardian",
+            "drt1cqqxak4wun7508e0yj9ng843r6hv4mzd0hhpjpsejkpn9wa9yq8s0ztfl2",
+        ]
+    )
+    assert return_code == 0
+
+    tx = _read_stdout(capsys)
+    tx_json = json.loads(tx)["emittedTransaction"]
+    assert tx_json["gasLimit"] == 100000
+
+
+def test_estimate_gas_with_multiplier(capsys: Any):
+    return_code = main(
+        [
+            "tx",
+            "new",
+            "--pem",
+            str(testdata_path / "alice.pem"),
+            "--receiver",
+            "drt1spyavw0956vq68xj8y4tenjpq2wd5a9p2c6j8gsz7ztyrnpxrruqlqde3c",
+            "--proxy",
+            "https://devnet-gateway.dharitri.org",
+            "--gas-limit-multiplier",
+            "1.5",
+            "--value",
+            "1000000000000",
+        ]
+    )
+    assert return_code == 0
+
+    tx = _read_stdout(capsys)
+    tx_json = json.loads(tx)["emittedTransaction"]
+    assert tx_json["gasLimit"] == 75000
 
 
 def _read_stdout(capsys: Any) -> str:

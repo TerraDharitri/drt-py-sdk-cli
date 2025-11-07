@@ -5,6 +5,9 @@ on:
     branches: [main, feat/*]
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 env:
  BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
 
@@ -35,14 +38,14 @@ jobs:
 
       - name: Smoke test (with resolution == remote)
         run: |
-          mkdir -p ~/dharitri-sdk
+          mkdir -p ~/dharitri-py-sdk
           export PYTHONPATH=.
           python3 -m dharitri_sdk_cli.cli config set github_api_token ${{ secrets.GITHUB_TOKEN }}
           python3 -m dharitri_sdk_cli.cli localnet prerequisites --configfile=./dharitri_sdk_cli/tests/testdata/localnet_with_resolution_remote.toml
           python3 -m dharitri_sdk_cli.cli localnet build --configfile=./dharitri_sdk_cli/tests/testdata/localnet_with_resolution_remote.toml
 
           # "Go" and artifacts from "GOPATH/pkg/mod" are not needed anymore.
-          sudo rm -rf ~/dharitri-sdk/golang
+          sudo rm -rf ~/dharitri-py-sdk/golang
 
           python3 -m dharitri_sdk_cli.cli localnet clean --configfile=./dharitri_sdk_cli/tests/testdata/localnet_with_resolution_remote.toml
           python3 -m dharitri_sdk_cli.cli localnet config --configfile=./dharitri_sdk_cli/tests/testdata/localnet_with_resolution_remote.toml
@@ -57,17 +60,17 @@ jobs:
 
       - name: Smoke test (with resolution == local)
         run: |
-          mkdir -p ~/dharitri-sdk/sandbox
+          mkdir -p ~/dharitri-py-sdk/sandbox
           export PYTHONPATH=.
 
-          git clone https://github.com/TerraDharitri/drt-go-chain --branch=main --single-branch ~/dharitri-sdk/sandbox/drt-go-chain
-          git clone https://github.com/TerraDharitri/drt-go-chain-proxy --branch=main --single-branch ~/dharitri-sdk/sandbox/drt-go-chain-proxy
+          git clone https://github.com/TerraDharitri/drt-go-chain --branch=master --single-branch ~/dharitri-py-sdk/sandbox/drt-go-chain
+          git clone https://github.com/TerraDharitri/drt-go-chain-proxy --branch=master --single-branch ~/dharitri-py-sdk/sandbox/drt-go-chain-proxy
 
           python3 -m dharitri_sdk_cli.cli localnet prerequisites --configfile=./dharitri_sdk_cli/tests/testdata/localnet_with_resolution_local.toml
           python3 -m dharitri_sdk_cli.cli localnet build --configfile=./dharitri_sdk_cli/tests/testdata/localnet_with_resolution_local.toml
 
           # "Go" and artifacts from "GOPATH/pkg/mod" are not needed anymore.
-          sudo rm -rf ~/dharitri-sdk/golang
+          sudo rm -rf ~/dharitri-py-sdk/golang
 
           python3 -m dharitri_sdk_cli.cli localnet clean --configfile=./dharitri_sdk_cli/tests/testdata/localnet_with_resolution_local.toml
           python3 -m dharitri_sdk_cli.cli localnet config --configfile=./dharitri_sdk_cli/tests/testdata/localnet_with_resolution_local.toml

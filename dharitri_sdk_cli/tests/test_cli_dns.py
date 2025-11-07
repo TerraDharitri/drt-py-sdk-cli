@@ -26,7 +26,7 @@ def test_prepare_relayed_dns_register_transaction(capsys: Any):
             "--chain",
             "T",
             "--relayer",
-            "drt1kp072dwz0arfz8m5lzmlypgu2nme9l9q33aty0znualvanfvmy5qd3yy8q",
+            "drt1cqqxak4wun7508e0yj9ng843r6hv4mzd0hhpjpsejkpn9wa9yq8s0ztfl2",
             "--relayer-pem",
             str(user),
         ]
@@ -37,7 +37,7 @@ def test_prepare_relayed_dns_register_transaction(capsys: Any):
     tx = output["emittedTransaction"]
     data = output["emittedTransactionData"]
 
-    assert tx["sender"] == "drt1c7pyyq2yaq5k7atn9z6qn5qkxwlc6zwc4vg7uuxn9ssy7evfh5jq4nm79l"
+    assert tx["sender"] == "drt1qyu5wthldzr8wx5c9ucg8kjagg0jfs53s8nr3zpz3hypefsdd8ssey5egf"
     assert tx["receiver"] == "drt1qqqqqqqqqqqqqpgq2leexk6fwaxlxggzrnkxzruwsjzfcq2mqzgq7hwwcs"
     assert tx["value"] == "0"
     assert tx["nonce"] == 0
@@ -45,14 +45,14 @@ def test_prepare_relayed_dns_register_transaction(capsys: Any):
     assert tx["chainID"] == "T"
     assert tx["version"] == 2
     assert tx["options"] == 0
-    assert tx["relayer"] == "drt1kp072dwz0arfz8m5lzmlypgu2nme9l9q33aty0znualvanfvmy5qd3yy8q"
+    assert tx["relayer"] == "drt1cqqxak4wun7508e0yj9ng843r6hv4mzd0hhpjpsejkpn9wa9yq8s0ztfl2"
     assert (
         tx["signature"]
-        == "cd7bf57dafbfd96bc95c7c4d0edd041c51491bdd9e598e7a1ce90a859ef7e8de07365042273fdb3fa6754743b0c36c67f6fc07ba42621847dac66d43b6132c08"
+        == "42ca28c45a0d09fbc6f1c804a16d3b6df13f97598d2f0390e6b6cf159a01085d0aa885c511b48df8b088212bdbd2d4f1ceed26bfff532cec840f79637a626508"
     )
     assert (
         tx["relayerSignature"]
-        == "e9ddd59b313c81951ff7f6e4c40e35ce79738da09b8e29aa90d93893566a8b18709bc86b96deaa151cbdb4a7f1e496e601f9d93d64dea269ede19f8e2fcb3f00"
+        == "8dad8988da5cbdf7cc3def9e2990bcd57d793e87a5254ecd6951c52de0c8978bd00e8e71606606f9a77c99700ea97139cd5c969e33cd4c8d360108173ac7a60a"
     )
     assert data == "register@616c6963652e6e756d626174"
 
